@@ -49,7 +49,7 @@ export class Location extends BaseEntity {
 
   // * ============================== META
   @Field(type => ID)
-  @PrimaryColumn('uuid', { update: false, unique: true }) // table column type
+  @PrimaryColumn('uuid', { unique: true }) // table column type
   id: string
 
   @Field(type => Date)
