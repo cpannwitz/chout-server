@@ -9,7 +9,8 @@ const {
   // DBDATABASE = '',
   // DBUSER = '',
   // DBPASSWORD = '',
-  REDIS_PORT = '',
+  REDIS_URL = '',
+  REDIS_PORT = '6379',
   REDIS_HOST = 'localhost',
   REDIS_PW = '',
   SESSIONSECRET = '',
@@ -49,6 +50,7 @@ export const systemConfig = {
   // dbDatabase: DBDATABASE,
   // dbUser: DBUSER,
   // dbPassword: DBPASSWORD,
+  redisURL: REDIS_URL,
   redis: {
     port: normalizePort(REDIS_PORT),
     host: REDIS_HOST,

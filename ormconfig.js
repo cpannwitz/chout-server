@@ -1,5 +1,6 @@
 const {
   NODE_ENV,
+  DBDATABASEURL = '',
   DBHOST = 'localhost',
   DBPORT = '5432',
   DBDATABASE = '',
@@ -11,12 +12,13 @@ const isEnvTEST = NODE_ENV === 'test' ? true : false
 const envdir = isEnvDev ? 'src/' : 'dist/'
 
 module.exports = {
+  type: 'postgres',
+  url: DBDATABASEURL,
   host: DBHOST,
   port: DBPORT,
   database: DBDATABASE,
   username: DBUSER,
   password: DBPASSWORD,
-  type: 'postgres',
   logging: isEnvDev ? 'all' : false,
   synchronize: isEnvTEST,
   dropSchema: isEnvTEST,
