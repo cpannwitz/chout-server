@@ -29,7 +29,7 @@ module.exports = {
   subscribers: [envdir + 'subscriber/**/*'],
   cli: {
     entitiesDir: './src/modules',
-    migrationsDir: './src/migration',
+    migrationsDir: './dist/migration',
     subscribersDir: './src/subscriber'
   },
   extra: {
