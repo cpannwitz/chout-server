@@ -18,6 +18,7 @@
     "start": "NODE_ENV=production node --optimize_for_size --max_old_space_size=460 --gc_interval=100 ./dist/index.js",
     "start:dev": "NODE_ENV=development nodemon --exec ts-node --files src/index.ts",
     "build": "NODE_ENV=production npm-run-all clean ts:build copy:static",
+    "heroku-prebuild": "npm-run-all migration:run",
     "copy:static": "cp -R src/static dist",
     "ts:build": "tsc",
     "ts:watch": "tsc --noEmit --watch",
