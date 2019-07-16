@@ -24,12 +24,12 @@ module.exports = {
   synchronize: isEnvTest,
   dropSchema: isEnvTest,
   cache: isEnvDev,
-  entities: [envdir + 'modules/**/*.entity{.ts,.js}'],
-  migrations: [envdir + 'migration/*.{.ts,.js}'],
+  entities: isEnvDev ? ['./src/modules/**/*.entity.ts'] : ['./dist/modules/**/*.entity.js'],
+  migrations: isEnvDev ? ['./src/migration/*.js'] : ['./dist/migration/*.js'],
   subscribers: [envdir + 'subscriber/**/*'],
   cli: {
     entitiesDir: './src/modules',
-    migrationsDir: './dist/migration',
+    migrationsDir: './src/migration/',
     subscribersDir: './src/subscriber'
   },
   extra: {

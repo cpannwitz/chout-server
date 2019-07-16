@@ -18,7 +18,7 @@
     "start": "NODE_ENV=production node --optimize_for_size --max_old_space_size=460 --gc_interval=100 ./dist/index.js",
     "start:dev": "NODE_ENV=development nodemon --exec ts-node --files src/index.ts",
     "build": "NODE_ENV=production npm-run-all clean ts:build copy:static",
-    "heroku-postbuild": "npm-run-all migration:run:js",
+    "heroku-postbuild": "npm-run-all migration:run",
     "copy:static": "cp -R src/static dist",
     "ts:build": "tsc",
     "ts:watch": "tsc --noEmit --watch",
@@ -26,12 +26,13 @@
     "clean": "rimraf ./dist",
     "test": "NODE_ENV=test CI=true jest",
     "test:cli": "NODE_ENV=test jest --watch",
-    "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
-    "migration:run:js": "typeorm migration:run",
-    "migration:gen": "ts-node ./node_modules/typeorm/cli.js migration:generate -n migration",
+    "migration:run": "typeorm migration:run",
+    "migration:run:ts": "ts-node ./node_modules/typeorm/cli.js migration:run",
+    "migration:gen": "typeorm migration:generate -n migration",
+    "migration:gen:ts": "ts-node ./node_modules/typeorm/cli.js migration:generate -n migration",
     "migration:create": "typeorm migration:create -n migration",
-    "migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert",
-    "migration:show": "ts-node ./node_modules/typeorm/cli.js migration:show"
+    "migration:revert": "typeorm migration:revert",
+    "migration:revert:ts": "ts-node ./node_modules/typeorm/cli.js migration:revert"
   },
   "dependencies": {
     "@godaddy/terminus": "^4.1.2",
