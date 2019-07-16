@@ -25,7 +25,7 @@ module.exports = {
   dropSchema: isEnvTest,
   cache: isEnvDev,
   entities: [envdir + 'modules/**/*.entity{.ts,.js}'],
-  migrations: [envdir + 'migration/**/*'],
+  migrations: [envdir + 'migration/*.{.ts,.js}'],
   subscribers: [envdir + 'subscriber/**/*'],
   cli: {
     entitiesDir: './src/modules',
