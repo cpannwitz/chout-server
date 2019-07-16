@@ -8,7 +8,8 @@ const {
   DBPASSWORD = ''
 } = process.env
 const isEnvDev = NODE_ENV === 'development' ? true : false
-const isEnvTEST = NODE_ENV === 'test' ? true : false
+const isEnvTest = NODE_ENV === 'test' ? true : false
+const isEnvProd = NODE_ENV === 'production' ? true : false
 const envdir = isEnvDev ? 'src/' : 'dist/'
 
 module.exports = {
@@ -20,8 +21,8 @@ module.exports = {
   username: DBUSER,
   password: DBPASSWORD,
   logging: isEnvDev ? 'all' : false,
-  synchronize: isEnvTEST,
-  dropSchema: isEnvTEST,
+  synchronize: isEnvTest,
+  dropSchema: isEnvTest,
   cache: isEnvDev,
   entities: [envdir + 'modules/**/*.entity{.ts,.js}'],
   migrations: [envdir + 'migration/**/*'],
@@ -32,6 +33,6 @@ module.exports = {
     subscribersDir: './src/subscriber'
   },
   extra: {
-    ssl: true
+    ssl: isEnvProd ? true : false
   }
 }
