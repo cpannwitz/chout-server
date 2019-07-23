@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import passport from 'passport'
 import AuthController from '../modules/auth/Auth.controller'
-import { generateToken, sendToken } from '../middlewares/authHandlers'
+import { generateToken, sendToken } from '../middlewares/auth/tokenMiddleware'
 
 const router = Router()
 router.post(

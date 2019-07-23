@@ -1,6 +1,7 @@
 import { createTerminus } from '@godaddy/terminus'
-import { ServerContext } from '../types/global'
+import { ServerContext } from '../types/_ServerTypes'
 import { Server } from 'http'
+import logger from '../services/logger'
 
 /**
  * Normalize a port into a number, string, or false.
@@ -25,7 +26,9 @@ export function normalizePort(val: string) {
 export function onListening(server: any) {
   const addr = server.address() || ({} as any)
   const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port
-  console.log('Listening on ' + bind)
+  const message = 'Listening on ' + bind
+  logger.info(message)
+  return message
 }
 
 export function onError(error: NodeJS.ErrnoException) {
@@ -39,11 +42,11 @@ export function onError(error: NodeJS.ErrnoException) {
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      console.error(bind + ' requires elevated privileges')
+      logger.error(bind + ' requires elevated privileges')
       process.exit(1)
       break
     case 'EADDRINUSE':
-      console.error(bind + ' is already in use')
+      logger.error(bind + ' is already in use')
       process.exit(1)
       break
     default:
@@ -63,6 +66,6 @@ export function gracefulHandler(server: Server, { app, db, redis }: ServerContex
         db.close(),
         redis.disconnect()
       ]),
-    onShutdown: () => console.log('cleanup finished, server is shutting down')
+    onShutdown: () => logger.info('cleanup finished, server is shutting down')
   } as any)
 }

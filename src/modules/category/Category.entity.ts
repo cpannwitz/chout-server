@@ -1,5 +1,4 @@
 import uuid from 'uuid'
-import { ObjectType, Field, ID, InputType } from 'type-graphql'
 import {
   Entity,
   PrimaryColumn,
@@ -10,11 +9,8 @@ import {
   // JoinTable
 } from 'typeorm'
 
-@InputType('CategoryInput') // type-graphql needed for every entity
-@ObjectType('CategoryObject') // type-graphql needed for every entity
 @Entity('category') // table name in PG
 export class Category extends BaseEntity {
-  @Field(type => String)
   @Column('varchar', { unique: true })
   name: string
 
@@ -29,7 +25,6 @@ export class Category extends BaseEntity {
   // userInterests?: User[]
 
   // * ============================== META
-  @Field(type => ID)
   @PrimaryColumn('uuid', { unique: true }) // table column type
   id: string
 

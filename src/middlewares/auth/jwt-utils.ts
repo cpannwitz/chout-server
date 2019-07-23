@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken'
-import { systemConfig } from '../configs'
+import { systemConfig } from '../../configs'
 
 export type JWTPayload = { userId: string } | null
 
 type SignVariant = 'accessToken' | 'refreshToken'
 interface SignJWT {
-  payload: object | string | Buffer
+  payload: object
   variant?: SignVariant
 }
 export function signJWT({ payload, variant = 'accessToken' }: SignJWT) {
