@@ -4,9 +4,9 @@ import FacebookTokenStrategy from 'passport-facebook-token'
 import { Strategy as GoogleTokenStrategy } from 'passport-google-token'
 import { Profile } from 'passport'
 import { getRepository } from 'typeorm'
-import { User } from '../modules/user/User.entity'
-import { UserService } from '../modules/user/User.service'
-import { systemConfig } from '../configs'
+import { User } from '../../modules/user/User.entity'
+import { UserService } from '../../modules/user/User.service'
+import { systemConfig } from '../../configs'
 import { Request } from 'express'
 
 async function processTokenLoginStrategy(
@@ -60,7 +60,6 @@ async function processLocalSignupStrategy(
     const user = await userService.getByEmail(email)
     if (!user) {
       const username = req.body.username
-      console.log('LOG | : username', username)
 
       if (username) {
         const newUser = userService.createOne({

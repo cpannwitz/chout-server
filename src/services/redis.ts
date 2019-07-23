@@ -3,7 +3,7 @@ import { systemConfig } from '../configs'
 
 function getRedis() {
   if (systemConfig.redisURL) return new Redis(systemConfig.redisURL)
-  return new Redis(systemConfig.redis)
+  return new Redis(systemConfig.redis as any) // TODO!
 }
 
 export default getRedis

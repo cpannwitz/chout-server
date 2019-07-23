@@ -1,10 +1,11 @@
 import request from 'request'
+import { validate } from 'class-validator'
 import { Request, Response, NextFunction } from 'express'
 import { getRepository } from 'typeorm'
+import { systemConfig } from '../../configs'
+
 import { User } from '../user/User.entity'
 import { UserService } from '../user/User.service'
-import { systemConfig } from '../../configs'
-import { validate } from 'class-validator'
 
 class AuthController {
   static authenticateSocialLogin = async (

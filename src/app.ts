@@ -2,9 +2,6 @@ import Listr from 'listr'
 import path from 'path'
 import express from 'express'
 import cors from 'cors'
-import * as ClassValidator from 'class-validator'
-import * as TypeORM from 'typeorm'
-import { Container } from 'typedi'
 import helmet from 'helmet'
 import responseTime from 'response-time'
 import compression from 'compression'
@@ -12,15 +9,14 @@ import timeout from 'connect-timeout'
 import fileUpload from 'express-fileupload'
 import StatusMonitor from 'express-status-monitor'
 
-import { ServerContext } from './types/global'
+import { ServerContext } from './types/_ServerTypes'
 
 // SETUP FILES
 import Routes from './routes'
-import healthChecks from './utils/healthChecks'
+import healthChecks from './routes/healthChecks'
 import { systemConfig, corsConfig, ratelimitConfig } from './configs'
-import { expressLogger, expressErrorLogger } from './utils/logger'
-import { externalLogger } from './utils/logger'
-import { finalErrorHandler, notFoundErrorHandler } from './middlewares/errorHandlers'
+import { expressLogger, expressErrorLogger, externalLogger } from './services/logger'
+import { errorHandler } from './middlewares/error/errorHandler'
 
 import RateLimit from 'express-rate-limit'
 import RateLimitRedisStore from 'rate-limit-redis'
@@ -32,7 +28,7 @@ import {
   passportTwitter,
   passportLocalLogin,
   passportLocalSignup
-} from './middlewares/passport'
+} from './middlewares/auth/passport'
 
 import getDatabase from './services/database'
 import getRedis from './services/redis'
@@ -58,29 +54,18 @@ const startServer = new Listr(
     {
       title: 'Initializing Databasee Connection',
       task: async (ctx: ServerContext) => {
-        getDatabase().then(dbconnection => {
+        await getDatabase().then(dbconnection => {
           ctx.db = dbconnection
+          Promise.resolve()
         })
       }
     },
     {
       title: 'Initializing Redis Connection',
-      // skip: () => {
-      //   if (systemConfig.isEnvTest()) {
-      //     return 'Skipping Redis for tests'
-      //   }
-      // },
       task: (ctx: ServerContext) => {
         ctx.redis = getRedis()
       }
     },
-    // {
-    //   title: 'Initializing GraphQL Server',
-    //   task: async ({ app }: ServerContext) => {
-    //     // * Build GraphQL-Schema
-    //     getGraphqlServer(app).then(() => Promise.resolve())
-    //   }
-    // },
     {
       title: 'Initializing auth middleware',
       task: ({ app }: ServerContext) => {
@@ -119,18 +104,18 @@ const startServer = new Listr(
       }
     },
     {
-      title: 'Register API Endpoints | Routes',
-      task: ({ app }: ServerContext) => {
-        app.use(Routes)
-      }
-    },
-    {
       title: 'Initialize status checks',
       task: ({ app, db, redis }: ServerContext) => {
         // Status Monitor & Health Checks
         app.use(statusMonitor)
 
         app.use(healthChecks({ app, db, redis }))
+      }
+    },
+    {
+      title: 'Register API Endpoints | Routes',
+      task: ({ app }: ServerContext) => {
+        app.use(Routes)
       }
     },
     {
@@ -145,8 +130,7 @@ const startServer = new Listr(
     {
       title: 'Initialize error handlers',
       task: ({ app }: ServerContext) => {
-        app.use(notFoundErrorHandler)
-        app.use(finalErrorHandler)
+        app.use(errorHandler)
       }
     }
   ],
