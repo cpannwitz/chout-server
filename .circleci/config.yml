@@ -53,4 +53,4 @@ jobs: # a collection of steps
           command: yarn test
       - run: # build dist
           name: Build
-          command: yarn build
+          command: yarn build:test
