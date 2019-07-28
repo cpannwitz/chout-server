@@ -50,11 +50,13 @@ jobs:
   test:
     <<: *defaults
     steps:
+      - checkout_install
       - run: yarn test
 
   build:
     <<: *defaults
     steps:
+      - checkout_install
       - run: yarn build
 
 workflows:
