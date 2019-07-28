@@ -61,11 +61,6 @@ jobs:
     <<: *defaults
     steps:
       - run: yarn build
-      - persist_to_workspace:
-          root: ~/repo
-          paths:
-            - build
-            - package.json
 
 workflows:
   version: 2
