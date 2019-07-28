@@ -33,6 +33,8 @@ describe('JWT tests', () => {
   })
 
   it('creates a set of new tokens with given userId correctly', async () => {
-    await expect(createTokens('1')).resolves.toBeArrayOfSize(2)
+    await expect(
+      createTokens('1').catch(error => console.error(error))
+    ).resolves.toBeArrayOfSize(2)
   })
 })

@@ -2,6 +2,7 @@ import * as ClassValidator from 'class-validator'
 import * as TypeORM from 'typeorm'
 import { Container } from 'typedi'
 import { systemConfig } from '../configs'
+
 ClassValidator.useContainer(Container)
 TypeORM.useContainer(Container)
 

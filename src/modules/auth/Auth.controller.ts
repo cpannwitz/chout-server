@@ -1,7 +1,6 @@
 import request from 'request'
 import { validate } from 'class-validator'
 import { Request, Response, NextFunction } from 'express'
-import { getRepository } from 'typeorm'
 import { systemConfig } from '../../configs'
 
 import { User } from '../user/User.entity'
@@ -81,20 +80,22 @@ class AuthController {
   static changePassword = async (req: Request, res: Response, next: NextFunction) => {
     //Get ID from JWT
     const id = res.jwtPayload && res.jwtPayload.userId
+    if (!id) {
+      return res.status(401).send()
+    }
     //Get parameters from the body
     const { oldPassword, newPassword } = req.body
     if (!(oldPassword && newPassword)) {
-      res.status(400).send()
+      return res.status(400).send()
     }
     //Get user from the database
-    const userRepository = getRepository(User)
-    const userService = new UserService(userRepository)
+    const userService = new UserService()
 
     let user: User | undefined = undefined
     try {
-      user = await userRepository.findOneOrFail(id)
+      user = await userService.getById(id)
     } catch (error) {
-      res.status(401).send()
+      return res.status(401).send()
     }
 
     //Check if old password matchs
@@ -103,18 +104,17 @@ class AuthController {
       !user.password ||
       !userService.comparePasswords(user.password, oldPassword)
     ) {
-      res.status(401).send()
-      return
+      return res.status(401).send()
     }
 
-    user.password = newPassword
+    // user.password = newPassword
     const errors = await validate(user)
     if (errors.length > 0) {
-      res.status(400).send(errors)
-      return
+      return res.status(400).send(errors)
     }
+    userService.updateOne(id, { password: newPassword })
     //Hash the new password and save
-    userRepository.save(user)
+    // userRepository.save(user)
     res.status(204).send()
   }
 }
