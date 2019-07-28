@@ -1,5 +1,4 @@
 let {
-  NODE_ENV,
   DATABASE_URL,
   DBHOST,
   DBPORT,
@@ -8,19 +7,9 @@ let {
   DBPASSWORD,
 } = process.env
 
-const isDev = NODE_ENV === 'development' ? true : false
-const isProd = NODE_ENV === 'production' ? true : false
-const isTest = NODE_ENV === 'test' ? true : false
-
-if(isTest) {
-  DBHOST = 'localhost',
-  DBPORT = '5432',
-  DBDATABASE = 'choutdbtest',
-  DBUSER = 'chout',
-  DBPASSWORD = '_'
-}
-
-module.exports = {
+module.exports = [
+  {
+  name: 'default',
   url: DATABASE_URL,
   host: DATABASE_URL ? undefined : DBHOST,
   port: DATABASE_URL ? undefined : DBPORT,
@@ -28,22 +17,98 @@ module.exports = {
   username: DATABASE_URL ? undefined : DBUSER,
   password: DATABASE_URL ? undefined : DBPASSWORD,
   type: 'postgres',
-  logging: isDev ? 'all' : false,
-  synchronize: isTest ? true : false,
-  dropSchema: isTest ? true : false,
-  cache: isProd ? true : false,
-  entities: isProd ? ['./dist/modules/**/*.entity.js'] : ['./src/modules/**/*.entity.ts'],
-  migrations: isProd ? ['./dist/migration/*.js'] : ['./src/migration/*.ts'],
-  subscribers: isProd ? ['./dist/subscriber/**/*'] : ['./src/subscriber/**/*'],
+  logging: 'all',
+  synchronize:false,
+  dropSchema: false,
+  cache: false,
+  entities: ['./src/modules/**/*.entity.ts'],
+  migrations: ['./src/migration/*.ts'],
+  subscribers: ['./src/subscriber/**/*'],
   cli: {
     entitiesDir: './src/modules',
     migrationsDir: './src/migration/',
     subscribersDir: './src/subscriber'
   },
   extra: {
-    ssl: isProd ? true : false
+    ssl: false
   }
-}
+},
+  {
+  name: 'development',
+  url: DATABASE_URL,
+  host: DATABASE_URL ? undefined : DBHOST,
+  port: DATABASE_URL ? undefined : DBPORT,
+  database: DATABASE_URL ? undefined : DBDATABASE,
+  username: DATABASE_URL ? undefined : DBUSER,
+  password: DATABASE_URL ? undefined : DBPASSWORD,
+  type: 'postgres',
+  logging: 'all',
+  synchronize:false,
+  dropSchema: false,
+  cache: false,
+  entities: ['./src/modules/**/*.entity.ts'],
+  migrations: ['./src/migration/*.ts'],
+  subscribers: ['./src/subscriber/**/*'],
+  cli: {
+    entitiesDir: './src/modules',
+    migrationsDir: './src/migration/',
+    subscribersDir: './src/subscriber'
+  },
+  extra: {
+    ssl: false
+  }
+},
+{
+  name: 'test',
+  url: DATABASE_URL,
+  host: DATABASE_URL ? undefined : 'localhost',
+  port: DATABASE_URL ? undefined : '5432',
+  database: DATABASE_URL ? undefined : 'choutdbtest',
+  username: DATABASE_URL ? undefined : 'chout',
+  password: DATABASE_URL ? undefined : '_',
+  type: 'postgres',
+  logging: false,
+  synchronize:true,
+  dropSchema: true,
+  cache: false,
+  entities: ['./src/modules/**/*.entity.ts'],
+  migrations: ['./src/migration/*.ts'],
+  subscribers: ['./src/subscriber/**/*'],
+  cli: {
+    entitiesDir: './src/modules',
+    migrationsDir: './src/migration/',
+    subscribersDir: './src/subscriber'
+  },
+  extra: {
+    ssl: false
+  }
+},
+{
+  name: 'production',
+  url: DATABASE_URL,
+  host: DATABASE_URL ? undefined : DBHOST,
+  port: DATABASE_URL ? undefined : DBPORT,
+  database: DATABASE_URL ? undefined : DBDATABASE,
+  username: DATABASE_URL ? undefined : DBUSER,
+  password: DATABASE_URL ? undefined : DBPASSWORD,
+  type: 'postgres',
+  logging: false,
+  synchronize: false,
+  dropSchema: false,
+  cache: true,
+  entities: ['./dist/modules/**/*.entity.js'] ,
+  migrations: ['./dist/migration/*.js'] ,
+  subscribers: ['./dist/subscriber/**/*'] ,
+  cli: {
+    entitiesDir: './src/modules',
+    migrationsDir: './src/migration/',
+    subscribersDir: './src/subscriber'
+  },
+  extra: {
+    ssl: true
+  }
+},
+]
 
 //   {
 //   name: 'default',
