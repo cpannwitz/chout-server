@@ -22,7 +22,7 @@
     "ts:build": "tsc",
     "ts:watch": "tsc --noEmit --watch",
     "clean": "rimraf ./dist",
-    "test": "jest --detectOpenHandles",
+    "test": "NODE_ENV=test CI=true jest",
     "test:cli": "NODE_ENV=test jest --watch",
     "migration:run": "typeorm migration:run",
     "migration:run:ts": "ts-node ./node_modules/typeorm/cli.js migration:run",
