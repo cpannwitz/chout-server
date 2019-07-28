@@ -8,31 +8,31 @@ const {
 } = process.env
 
 module.exports = [
-  {
-  name: 'default',
-  url: DATABASE_URL,
-  host: DBHOST,
-  port: DBPORT,
-  database: DBDATABASE,
-  username: DBUSER,
-  password: DBPASSWORD,
-  type: 'postgres',
-  logging: 'all',
-  synchronize: false,
-  dropSchema: false,
-  cache: true,
-  entities: ['./dist/modules/**/*.entity.js'],
-  migrations: ['./dist/migration/*.js'],
-  subscribers: ['./dist/subscriber/**/*'],
-  cli: {
-    entitiesDir: './src/modules',
-    migrationsDir: './src/migration/',
-    subscribersDir: './src/subscriber'
-  },
-  extra: {
-    ssl: false
-  }
-},
+//   {
+//   name: 'default',
+//   url: DATABASE_URL,
+//   host: DBHOST,
+//   port: DBPORT,
+//   database: DBDATABASE,
+//   username: DBUSER,
+//   password: DBPASSWORD,
+//   type: 'postgres',
+//   logging: 'all',
+//   synchronize: false,
+//   dropSchema: false,
+//   cache: true,
+//   entities: ['./dist/modules/**/*.entity.js'],
+//   migrations: ['./dist/migration/*.js'],
+//   subscribers: ['./dist/subscriber/**/*'],
+//   cli: {
+//     entitiesDir: './src/modules',
+//     migrationsDir: './src/migration/',
+//     subscribersDir: './src/subscriber'
+//   },
+//   extra: {
+//     ssl: false
+//   }
+// },
   {
   name: 'development',
   url: DATABASE_URL,
