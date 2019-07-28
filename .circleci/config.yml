@@ -18,7 +18,6 @@ jobs:
           DBPASSWORD: _
           # REDIS_PORT: 6379
           REDIS_HOST: localhost
-          REDIS_PW: _
           SESSIONSECRET: secret
           AUTH_JWT_SECRET: secret
           AUTH_JWT_TTL: 1d
@@ -35,8 +34,6 @@ jobs:
           POSTGRES_USER: chout
           POSTGRES_PASSWORD: _
       - image: redis
-        environment:
-          REDIS_PASSWORD: _
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
