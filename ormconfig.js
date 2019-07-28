@@ -1,5 +1,4 @@
 const {
-  // NODE_ENV,
   DATABASE_URL,
   DBHOST,
   DBPORT,
@@ -7,14 +6,11 @@ const {
   DBUSER,
   DBPASSWORD,
 } = process.env
-// const isEnvDev = NODE_ENV === 'development' ? true : false
-// const isEnvTest = NODE_ENV === 'test' ? true : false
-// const isEnvProd = NODE_ENV === 'production' ? true : false
-// const envdir = isEnvDev ? 'src/' : 'dist/'
 
 module.exports = [
   {
   name: 'default',
+  url: DATABASE_URL,
   host: DBHOST,
   port: DBPORT,
   database: DBDATABASE,
@@ -39,6 +35,7 @@ module.exports = [
 },
   {
   name: 'development',
+  url: DATABASE_URL,
   host: DBHOST,
   port: DBPORT,
   database: DBDATABASE,
@@ -64,11 +61,11 @@ module.exports = [
   {
   name: 'production',
   url: DATABASE_URL,
-  // host: DATABASE_URL ? undefined : DBHOST,
-  // port: DATABASE_URL ? undefined : DBPORT,
-  // database: DATABASE_URL ? undefined : DBDATABASE,
-  // username: DATABASE_URL ? undefined : DBUSER,
-  // password: DATABASE_URL ? undefined : DBPASSWORD,
+  host: DATABASE_URL ? undefined : DBHOST,
+  port: DATABASE_URL ? undefined : DBPORT,
+  database: DATABASE_URL ? undefined : DBDATABASE,
+  username: DATABASE_URL ? undefined : DBUSER,
+  password: DATABASE_URL ? undefined : DBPASSWORD,
   type: 'postgres',
   logging: false,
   synchronize: false,
@@ -88,6 +85,7 @@ module.exports = [
 },
   {
   name: 'test',
+  url: DATABASE_URL,
   host: DBHOST,
   port: DBPORT,
   database: DBDATABASE,
