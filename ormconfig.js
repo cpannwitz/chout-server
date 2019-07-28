@@ -41,8 +41,7 @@ module.exports = {
     subscribersDir: './src/subscriber'
   },
   extra: {
-    ssl: false
-    // ssl: isProd ? true : false
+    ssl: isProd ? true : false
   }
 }
 
