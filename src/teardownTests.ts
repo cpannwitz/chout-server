@@ -1,8 +1,9 @@
+import 'dotenv/config'
 import { getConnection } from 'typeorm'
 import getRedis from './services/redis'
 
 async function teardownTests() {
-  getConnection().close()
+  getConnection('test').close()
   getRedis().disconnect()
 }
 
