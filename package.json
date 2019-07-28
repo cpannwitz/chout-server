@@ -21,6 +21,7 @@
     "build:dev": "NODE_ENV=production npm-run-all clean tsc copy:static migration:run:dev",
     "build:test": "NODE_ENV=production npm-run-all clean tsc copy:static migration:run:test",
     "copy:static": "cp -R src/static dist",
+    "tsc": "tsc",
     "clean": "rimraf ./dist",
     "test": "NODE_ENV=test CI=true jest",
     "test:dev": "NODE_ENV=test jest --watch",
