@@ -2,7 +2,7 @@ import { getConnection } from 'typeorm'
 import getRedis from './services/redis'
 
 async function teardownTests() {
-  getConnection('test').close()
+  getConnection().close()
   getRedis().disconnect()
 }
 

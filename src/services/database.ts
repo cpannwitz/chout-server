@@ -1,14 +1,13 @@
 import * as ClassValidator from 'class-validator'
 import * as TypeORM from 'typeorm'
 import { Container } from 'typedi'
-import { systemConfig } from '../configs'
 
 ClassValidator.useContainer(Container)
 TypeORM.useContainer(Container)
 
-function getDatabase(connectionName?: string) {
+function getDatabase(connectionName: string = 'default') {
   return new Promise<TypeORM.Connection>((resolve, reject) => {
-    TypeORM.createConnection(connectionName || systemConfig.env)
+    TypeORM.createConnection(connectionName)
       .then(dbconnection => {
         resolve(dbconnection)
       })
