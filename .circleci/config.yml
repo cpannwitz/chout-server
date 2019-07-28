@@ -3,8 +3,7 @@
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
 version: 2
-defaults: &defaults
-  working_directory: ~/repo
+defaults: &defaults # working_directory: ~/repo
   docker:
     - image: circleci/node:11.13
       environment:
