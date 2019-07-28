@@ -67,12 +67,12 @@ workflows:
   build_test:
     jobs:
       - checkout_code:
-          filters:
-            branches:
-              only:
-                - staging
-                - develop
-                - master
+      # filters:
+      #   branches:
+      #     only:
+      #       - staging
+      #       - develop
+      #       - master
       - install_dependencies:
           requires:
             - checkout_code
