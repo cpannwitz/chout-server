@@ -1,17 +1,19 @@
 import * as ClassValidator from 'class-validator'
 import * as TypeORM from 'typeorm'
 import { Container } from 'typedi'
+import { systemConfig } from '../configs'
+
 ClassValidator.useContainer(Container)
 TypeORM.useContainer(Container)
 
-function getDatabase() {
+function getDatabase(connectionName?: string) {
   return new Promise<TypeORM.Connection>((resolve, reject) => {
-    TypeORM.createConnection()
+    TypeORM.createConnection(connectionName || systemConfig.env)
       .then(dbconnection => {
         resolve(dbconnection)
       })
-      .catch(() => {
-        reject({ message: 'DATABASE CONNECTION CANT BE ESTABLISHED' })
+      .catch(error => {
+        reject('DATABASE CONNECTION CANT BE ESTABLISHED: ' + error.message)
       })
   })
 }

@@ -1,5 +1,3 @@
-import { normalizePort } from './utils/serverUtils'
-
 const {
   NODE_ENV = 'development',
   ENVIRONMENT = 'development',
@@ -52,7 +50,7 @@ export const systemConfig = {
   // dbPassword: DBPASSWORD,
   redisURL: REDIS_URL,
   redis: {
-    port: normalizePort(REDIS_PORT),
+    port: REDIS_PORT,
     host: REDIS_HOST,
     password: REDIS_PW
   },

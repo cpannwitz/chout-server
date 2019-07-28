@@ -1,0 +1,112 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:11.13
+        environment:
+          NODE_ENV: test
+          ENVIRONMENT: test
+          # PORT: 4000
+          DBHOST: localhost
+          # DBPORT: 5432
+          DBDATABASE: choutdb-test
+          DBUSER: chout
+          DBPASSWORD: _
+          # REDIS_PORT: 6379
+          REDIS_HOST: localhost
+          SESSIONSECRET: secret
+          AUTH_JWT_SECRET: secret
+          AUTH_JWT_TTL: 1d
+          AUTH_JWT_REFRESH_TTL: 7d
+          AUTH_TWITTER_TOKEN: _
+          AUTH_TWITTER_SECRET: _
+          AUTH_GOOGLE_CLIENTID: _
+          AUTH_GOOGLE_CLIENTKEY: _
+          AUTH_FACEBOOK_CLIENTID: _
+          AUTH_FACEBOOK_CLIENTKEY: _
+      - image: circleci/postgres:10
+        environment:
+          POSTGRES_DB: choutdb-test
+          POSTGRES_USER: chout
+          POSTGRES_PASSWORD: _
+      - image: redis
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: yarn install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      # run tests!
+      - run: yarn test
+# version: 2
+# jobs:
+#   build:
+# docker:
+#   - image: circleci/node:11.13
+#     environment:
+#       NODE_ENV: test
+#       ENVIRONMENT: test
+#       # PORT: 4000
+#       DBHOST: localhost
+#       # DBPORT: 5432
+#       DBDATABASE: choutdb-test
+#       DBUSER: chout
+#       DBPASSWORD: _
+#       # REDIS_PORT: 6379
+#       REDIS_HOST: localhost
+#       REDIS_PW: _
+#       SESSIONSECRET: secret
+#       AUTH_JWT_SECRET: secret
+#       AUTH_JWT_TTL: 1d
+#       AUTH_JWT_REFRESH_TTL: 7d
+#       AUTH_TWITTER_TOKEN: _
+#       AUTH_TWITTER_SECRET: _
+#       AUTH_GOOGLE_CLIENTID: _
+#       AUTH_GOOGLE_CLIENTKEY: _
+#       AUTH_FACEBOOK_CLIENTID: _
+#       AUTH_FACEBOOK_CLIENTKEY: _
+#   - image: circleci/postgres:10
+#     environment:
+#       POSTGRES_DB: choutdb-test
+#       POSTGRES_USER: chout
+#       POSTGRES_PASSWORD: _
+#   - image: redis
+#     environment:
+#       REDIS_PASSWORD: _
+#     steps:
+#       - checkout
+#       - restore_cache:
+#           name: Restore Yarn Package Cache
+#           keys:
+#             - m2-yarn-packages-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
+#       - run:
+#           name: Install dependencies
+#           command: yarn
+#       - save_cache:
+#           name: Save Yarn Package Cache
+#           key: m2-yarn-packages-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
+#           paths:
+#             - ./node_modules/

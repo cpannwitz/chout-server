@@ -1,9 +1,15 @@
 import Redis from 'ioredis'
 import { systemConfig } from '../configs'
 
+let redisConnection: Redis.Redis
+if (systemConfig.redisURL) {
+  redisConnection = new Redis(systemConfig.redisURL)
+} else {
+  redisConnection = new Redis(systemConfig.redis as any)
+} // TODO!
+
 function getRedis() {
-  if (systemConfig.redisURL) return new Redis(systemConfig.redisURL)
-  return new Redis(systemConfig.redis)
+  return redisConnection
 }
 
 export default getRedis

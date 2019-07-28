@@ -1,38 +1,113 @@
 const {
-  NODE_ENV,
-  DATABASE_URL = '',
-  DBHOST = 'localhost',
-  DBPORT = '5432',
-  DBDATABASE = '',
-  DBUSER = '',
-  DBPASSWORD = ''
+  // NODE_ENV,
+  DATABASE_URL,
+  DBHOST,
+  DBPORT,
+  DBDATABASE,
+  DBUSER,
+  DBPASSWORD,
 } = process.env
-const isEnvDev = NODE_ENV === 'development' ? true : false
-const isEnvTest = NODE_ENV === 'test' ? true : false
-const isEnvProd = NODE_ENV === 'production' ? true : false
-const envdir = isEnvDev ? 'src/' : 'dist/'
+// const isEnvDev = NODE_ENV === 'development' ? true : false
+// const isEnvTest = NODE_ENV === 'test' ? true : false
+// const isEnvProd = NODE_ENV === 'production' ? true : false
+// const envdir = isEnvDev ? 'src/' : 'dist/'
 
-module.exports = {
-  type: 'postgres',
-  url: DATABASE_URL,
+module.exports = [
+  {
+  name: 'default',
   host: DBHOST,
   port: DBPORT,
   database: DBDATABASE,
   username: DBUSER,
   password: DBPASSWORD,
-  logging: isEnvDev ? 'all' : false,
-  synchronize: isEnvTest,
-  dropSchema: isEnvTest,
-  cache: isEnvDev,
-  entities: isEnvDev ? ['./src/modules/**/*.entity.ts'] : ['./dist/modules/**/*.entity.js'],
-  migrations: isEnvDev ? ['./src/migration/*.js'] : ['./dist/migration/*.js'],
-  subscribers: [envdir + 'subscriber/**/*'],
+  type: 'postgres',
+  logging: 'all',
+  synchronize: false,
+  dropSchema: false,
+  cache: true,
+  entities: ['./dist/modules/**/*.entity.js'],
+  migrations: ['./dist/migration/*.js'],
+  subscribers: ['./dist/subscriber/**/*'],
   cli: {
     entitiesDir: './src/modules',
     migrationsDir: './src/migration/',
     subscribersDir: './src/subscriber'
   },
   extra: {
-    ssl: isEnvProd ? true : false
+    ssl: false
   }
-}
+},
+  {
+  name: 'development',
+  host: DBHOST,
+  port: DBPORT,
+  database: DBDATABASE,
+  username: DBUSER,
+  password: DBPASSWORD,
+  type: 'postgres',
+  logging: 'all',
+  synchronize: false,
+  dropSchema: false,
+  cache: true,
+  entities: ['./src/modules/**/*.entity.ts'],
+  migrations: ['./src/migration/*.js'],
+  subscribers: ['./src/subscriber/**/*'],
+  cli: {
+    entitiesDir: './src/modules',
+    migrationsDir: './src/migration/',
+    subscribersDir: './src/subscriber'
+  },
+  extra: {
+    ssl: false
+  }
+},
+  {
+  name: 'production',
+  url: DATABASE_URL,
+  // host: DATABASE_URL ? undefined : DBHOST,
+  // port: DATABASE_URL ? undefined : DBPORT,
+  // database: DATABASE_URL ? undefined : DBDATABASE,
+  // username: DATABASE_URL ? undefined : DBUSER,
+  // password: DATABASE_URL ? undefined : DBPASSWORD,
+  type: 'postgres',
+  logging: false,
+  synchronize: false,
+  dropSchema: false,
+  cache: true,
+  entities: ['./dist/modules/**/*.entity.js'],
+  migrations: ['./dist/migration/*.js'],
+  subscribers: ['./dist/subscriber/**/*'],
+  cli: {
+    entitiesDir: './src/modules',
+    migrationsDir: './src/migration/',
+    subscribersDir: './src/subscriber'
+  },
+  extra: {
+    ssl: true
+  }
+},
+  {
+  name: 'test',
+  host: DBHOST,
+  port: DBPORT,
+  database: DBDATABASE,
+  username: DBUSER,
+  password: DBPASSWORD,
+  type: 'postgres',
+  logging: false,
+  synchronize: true,
+  dropSchema: true,
+  cache: false,
+  entities: ['./dist/modules/**/*.entity.js'],
+  migrations: ['./dist/migration/*.js'],
+  subscribers: ['./dist/subscriber/**/*'],
+  cli: {
+    entitiesDir: './src/modules',
+    migrationsDir: './src/migration/',
+    subscribersDir: './src/subscriber'
+  },
+  extra: {
+    ssl: false
+  }
+},
+]

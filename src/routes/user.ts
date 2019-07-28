@@ -1,11 +1,11 @@
 import { Router } from 'express'
 import UserController from '../modules/user/User.controller'
-import { authHandler } from '../middlewares/authHandlers'
+import { authGuard } from '../middlewares/auth/authGuard'
 // import { roleHandler } from '../middlewares/roleHandler'
 
 const router = Router()
 
-router.get('/me', authHandler, UserController.getCurrentUser)
+router.get('/me', authGuard, UserController.getCurrentUser)
 
 //Get all users
 // router.get("/", [checkJwt, checkRole(["ADMIN"])], UserController.listAll);
