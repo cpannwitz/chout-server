@@ -1,6 +1,6 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-export class migration1563304714122 implements MigrationInterface {
+export class migration1564322260652 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<any> {
         await queryRunner.query(`CREATE TABLE "category" ("name" character varying NOT NULL, "id" uuid NOT NULL, CONSTRAINT "UQ_23c05c292c439d77b0de816b500" UNIQUE ("name"), CONSTRAINT "PK_9c4e4a89e3674fc9f382d733f03" PRIMARY KEY ("id"))`);
@@ -80,11 +80,9 @@ export class migration1563304714122 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "events_attendees_on_behalf_users" ADD CONSTRAINT "FK_2665f14d503b3feefefff8e8770" FOREIGN KEY ("usersId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "events_attendees_invited_users" ADD CONSTRAINT "FK_9caedc75d8c28cbe1da074d65bf" FOREIGN KEY ("eventsId") REFERENCES "events"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "events_attendees_invited_users" ADD CONSTRAINT "FK_dc98eb9fc9fecc8fba0e537169f" FOREIGN KEY ("usersId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
-        await queryRunner.query(`CREATE TABLE "query-result-cache" ("id" SERIAL NOT NULL, "identifier" character varying, "time" bigint NOT NULL, "duration" integer NOT NULL, "query" text NOT NULL, "result" text NOT NULL, CONSTRAINT "PK_6a98f758d8bfd010e7e10ffd3d3" PRIMARY KEY ("id"))`);
     }
 
     public async down(queryRunner: QueryRunner): Promise<any> {
-        await queryRunner.query(`DROP TABLE "query-result-cache"`);
         await queryRunner.query(`ALTER TABLE "events_attendees_invited_users" DROP CONSTRAINT "FK_dc98eb9fc9fecc8fba0e537169f"`);
         await queryRunner.query(`ALTER TABLE "events_attendees_invited_users" DROP CONSTRAINT "FK_9caedc75d8c28cbe1da074d65bf"`);
         await queryRunner.query(`ALTER TABLE "events_attendees_on_behalf_users" DROP CONSTRAINT "FK_2665f14d503b3feefefff8e8770"`);
