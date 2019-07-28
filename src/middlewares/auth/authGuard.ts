@@ -3,7 +3,7 @@ import logger from '../../services/logger'
 import { Request, Response, NextFunction } from 'express'
 
 export async function authGuard(req: Request, res: Response, next: NextFunction) {
-  logger.debug(`Server: Connection from: ${req.connection.remoteAddress}`)
+  logger.debug(`Server: Connection from: ${req.connection.remoteAddress || 'unknown'}`)
   //Get the jwt token from the head
   const token = req.headers.authorization || ''
   let jwtPayload
@@ -19,5 +19,5 @@ export async function authGuard(req: Request, res: Response, next: NextFunction)
   }
 
   //Call the next middleware or controller
-  next()
+  return next()
 }

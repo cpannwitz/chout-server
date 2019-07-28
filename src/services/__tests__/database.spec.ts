@@ -8,8 +8,8 @@ describe('database connection test', () => {
     return done()
   })
 
-  it('connects NOT successfully with wrong credentials', async done => {
-    await expect(getDatabase('lol')).rejects.toContain(
+  it('connects NOT successfully with wrong credentials', done => {
+    expect(getDatabase('lol')).rejects.toContain(
       'DATABASE CONNECTION CANT BE ESTABLISHED:'
     )
     done()

@@ -3,21 +3,19 @@ import TwitterTokenStrategy from 'passport-twitter-token'
 import FacebookTokenStrategy from 'passport-facebook-token'
 import { Strategy as GoogleTokenStrategy } from 'passport-google-token'
 import { Profile } from 'passport'
-import { getRepository } from 'typeorm'
 import { User } from '../../modules/user/User.entity'
-import { UserService } from '../../modules/user/User.service'
+import UserService from '../../modules/user/User.service'
 import { systemConfig } from '../../configs'
 import { Request } from 'express'
 
-async function processTokenLoginStrategy(
+export async function processTokenLoginStrategy(
   accessToken: string,
   refreshToken: string,
   profile: Profile,
   done: (error: any, user: User | null) => void
 ) {
   try {
-    const userRepository = getRepository(User)
-    const userService = new UserService(userRepository)
+    const userService = new UserService()
     const user = await userService.upsertSocialUser(profile)
     done(null, user)
   } catch (error) {
@@ -25,14 +23,13 @@ async function processTokenLoginStrategy(
   }
 }
 
-async function processLocalLoginStrategy(
+export async function processLocalLoginStrategy(
   email: string,
   password: string,
   done: (error: any, user?: any, options?: IVerifyOptions) => void
 ) {
   try {
-    const userRepository = getRepository(User)
-    const userService = new UserService(userRepository)
+    const userService = new UserService()
 
     const user = await userService.getByEmail(email)
     if (user && user.password) {
@@ -40,8 +37,9 @@ async function processLocalLoginStrategy(
       if (validPassword) {
         done(null, user)
       }
+    } else {
+      done(null, null)
     }
-    done(null, null)
   } catch (error) {
     done(error, null)
   }
@@ -54,8 +52,7 @@ async function processLocalSignupStrategy(
   done: (error: any, user?: any, options?: IVerifyOptions) => void
 ) {
   try {
-    const userRepository = getRepository(User)
-    const userService = new UserService(userRepository)
+    const userService = new UserService()
 
     const user = await userService.getByEmail(email)
     if (!user) {

@@ -9,10 +9,8 @@ import { cryptoVerify } from '../../utils/crypto'
 
 @Service()
 export class UserService {
-  constructor(
-    @InjectRepository(User)
-    private repository: Repository<User>
-  ) {}
+  @InjectRepository(User)
+  private repository: Repository<User>
 
   async getAll(skip: number = 0, take: number = 100, filter: any) {
     const users = await this.repository.find({
@@ -91,16 +89,6 @@ export class UserService {
     user = await this.repository.findOne(user.id)
     return user as any
   }
-
-  // async findIndex(recipe: Recipe) {
-  //   return this.items.findIndex(it => it.id === recipe.id)
-  // }
-  // private createRecipe(recipeData: Partial<Recipe>): Recipe {
-  //   const recipe = plainToClass(Recipe, recipeData)
-  //   recipe.id = this.getId()
-  //   return recipe
-  // }
-  // private getId(): string {
-  // return (++this.autoIncrementValue).toString()
-  // }
 }
+
+export default UserService
