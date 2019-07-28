@@ -5,7 +5,7 @@ import { Container } from 'typedi'
 ClassValidator.useContainer(Container)
 TypeORM.useContainer(Container)
 
-function getDatabase(connectionName: string = 'default') {
+function getDatabase(connectionName: string = '') {
   return new Promise<TypeORM.Connection>((resolve, reject) => {
     TypeORM.createConnection(connectionName)
       .then(dbconnection => {

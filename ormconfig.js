@@ -33,7 +33,7 @@ module.exports = {
   dropSchema: isTest ? true : false,
   cache: isProd ? true : false,
   entities: isProd ? ['./dist/modules/**/*.entity.js'] : ['./src/modules/**/*.entity.ts'],
-  migrations: isProd ? ['./dist/migration/*.js'] : ['./src/migration/*.js'],
+  migrations: isProd ? ['./dist/migration/*.js'] : ['./src/migration/*.ts'],
   subscribers: isProd ? ['./dist/subscriber/**/*'] : ['./src/subscriber/**/*'],
   cli: {
     entitiesDir: './src/modules',
