@@ -20,8 +20,11 @@ export class User extends BaseEntity {
   @Column('varchar')
   email: string
 
-  @Column('boolean', { nullable: true })
+  @Column('boolean', { nullable: true, default: false })
   verified?: boolean
+
+  @Column('boolean', { nullable: true, default: false })
+  locked?: boolean
 
   @Column('varchar', { nullable: true, select: false })
   password?: string
