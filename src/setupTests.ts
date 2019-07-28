@@ -1,5 +1,3 @@
-import 'dotenv/config'
-
 import getDatabase from './services/database'
 import getRedis from './services/redis'
 

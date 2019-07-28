@@ -13,7 +13,7 @@ jobs:
           # PORT: 4000
           DBHOST: localhost
           # DBPORT: 5432
-          DBDATABASE: choutdb-test
+          DBDATABASE: choutdbtest
           DBUSER: chout
           DBPASSWORD: _
           # REDIS_PORT: 6379
@@ -30,7 +30,7 @@ jobs:
           AUTH_FACEBOOK_CLIENTKEY: _
       - image: circleci/postgres:10
         environment:
-          POSTGRES_DB: choutdb-test
+          POSTGRES_DB: choutdbtest
           POSTGRES_USER: chout
           POSTGRES_PASSWORD: _
       - image: redis
@@ -72,7 +72,7 @@ jobs:
 #       # PORT: 4000
 #       DBHOST: localhost
 #       # DBPORT: 5432
-#       DBDATABASE: choutdb-test
+#       DBDATABASE: choutdbtest
 #       DBUSER: chout
 #       DBPASSWORD: _
 #       # REDIS_PORT: 6379
@@ -90,7 +90,7 @@ jobs:
 #       AUTH_FACEBOOK_CLIENTKEY: _
 #   - image: circleci/postgres:10
 #     environment:
-#       POSTGRES_DB: choutdb-test
+#       POSTGRES_DB: choutdbtest
 #       POSTGRES_USER: chout
 #       POSTGRES_PASSWORD: _
 #   - image: redis

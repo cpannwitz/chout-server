@@ -46,10 +46,10 @@ In `psql` shell:
 
 ```psql
 CREATE DATABASE choutdb;
-CREATE DATABASE choutdb-test;
+CREATE DATABASE choutdbtest;
 CREATE USER chout;
 GRANT ALL PRIVILEGES ON DATABASE choutdb TO chout;
-GRANT ALL PRIVILEGES ON DATABASE choutdb-test TO chout;
+GRANT ALL PRIVILEGES ON DATABASE choutdbtest TO chout;
 ```
 
 Redis:
