@@ -35,14 +35,10 @@ defaults: &defaults
         POSTGRES_PASSWORD: _
     - image: redis
 jobs:
-  checkout_code:
+  checkout_install:
     <<: *defaults
     steps:
       - checkout
-
-  install_dependencies:
-    <<: *defaults
-    steps:
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
@@ -66,21 +62,10 @@ workflows:
   version: 2
   build_test:
     jobs:
-      - checkout_code
-      # filters:
-      #   branches:
-      #     only:
-      #       - staging
-      #       - develop
-      #       - master
-      - install_dependencies:
-          requires:
-            - checkout_code
+      - checkout_install
       - test:
           requires:
-            - checkout_code
-            - install_dependencies
+            - checkout_install
       - build:
           requires:
-            - checkout_code
-            - install_dependencies
+            - checkout_install
