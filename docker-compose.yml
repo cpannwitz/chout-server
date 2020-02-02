@@ -1,0 +1,57 @@
+# https://devcenter.heroku.com/articles/local-development-with-docker-compose
+
+version: "3.7"
+
+services:
+  node:
+    container_name: node-container
+    restart: always
+    build:
+      context: .
+      target: development
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - ${PORT}:${PORT}
+      - 9229:9229
+    depends_on:
+      - postgres
+    env_file: .env
+    command: yarn start:debug
+    networks:
+      - mainnet
+  postgres:
+    image: postgres:latest
+    container_name: postgres-container
+    networks:
+      - mainnet
+    env_file: .env
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  pgadmin:
+    container_name: pgadmin-container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - ${PGADMIN_PORT}:80
+    networks:
+      - mainnet
+    restart: always
+    depends_on:
+      - postgres
+networks:
+  mainnet:
+volumes:
+  pgdata:
+  pgadmin:
