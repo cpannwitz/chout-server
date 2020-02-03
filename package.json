@@ -8,6 +8,10 @@
     "url": "https://pnwtz.me"
   },
   "license": "MIT",
+  "engines": {
+    "node": "12.14.1",
+    "yarn": "1.x"
+  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -17,6 +21,7 @@
     "start:docker": "docker-compose up -V",
     "start:debug": "nest start --debug 0.0.0.0:9229 --watch",
     "start:prod": "node dist/main",
+    "deploy": "heroku container:push web -a chout-server && heroku container:release web -a chout-server",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",
     "test:watch": "jest --watch",
