@@ -1,6 +1,6 @@
 # https://devcenter.heroku.com/articles/local-development-with-docker-compose
 
-version: "3.7"
+version: '3.7'
 
 services:
   node:
@@ -34,7 +34,23 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      # - pgdata:/var/lib/postgresql/data
+      - ./.data/postgres:/var/lib/postgresql/data
+  postgres-test:
+    image: postgres:latest
+    container_name: postgres-test-container
+    networks:
+      - mainnet
+    env_file: .env
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - 5433:5432
+    # volumes:
+    # - pgdata:/var/lib/postgresql/data
+    # - ./.data/postgres:/var/lib/postgresql/data
   pgadmin:
     container_name: pgadmin-container
     image: dpage/pgadmin4
@@ -53,5 +69,5 @@ services:
 networks:
   mainnet:
 volumes:
-  pgdata:
+  # pgdata:
   pgadmin:

@@ -10,4 +10,8 @@ export class AppController {
   getHello(@Res() res: Response) {
     res.redirect('https://chout.app')
   }
+  @Get()
+  ping() {
+    return this.appService.getPong()
+  }
 }
