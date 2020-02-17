@@ -1,33 +1,42 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { ConfigModule, ConfigService } from '@nestjs/config'
-import { WinstonModule } from 'nest-winston'
-import { mainconfig, loggerconfig } from './config'
+import { LoggerModule } from 'nestjs-pino'
+import { mainConfig, authConfig, loggerConfig } from './config'
+import { TerminusModule } from '@nestjs/terminus'
+import { HealthService } from './health/health.service'
+import { HealthModule } from './health/health.module'
 
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
-import { UserController } from './user/user.controller'
-import { EventsController } from './events/events.controller'
+import { AuthModule } from './auth/auth.module'
+import { UsersModule } from './users/users.module'
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [mainconfig, loggerconfig],
+      load: [mainConfig, authConfig, loggerConfig],
       expandVariables: true,
       isGlobal: true
     }),
-    WinstonModule.forRootAsync({
+    LoggerModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (config: ConfigService) => config.get('winston') || {}
+      useFactory: (config: ConfigService) => config.get('logger') || {}
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => config.get('typeorm') || {}
-    })
+    }),
+    TerminusModule.forRootAsync({
+      imports: [HealthModule],
+      useExisting: HealthService
+    }),
+    AuthModule,
+    UsersModule
   ],
-  controllers: [AppController, UserController, EventsController],
+  controllers: [AppController],
   providers: [AppService]
 })
 export class AppModule {}

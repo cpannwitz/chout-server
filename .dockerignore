@@ -17,6 +17,7 @@ test
 /misc
 # Cache
 .cache/
+.data
 
 # Logs
 logs
