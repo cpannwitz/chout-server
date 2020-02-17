@@ -27,11 +27,11 @@ prepation:
   script:
     - yarn install
 
-test_project:
-  <<: *only-default
-  stage: test
-  script:
-    - yarn test
+# test_project:
+#   <<: *only-default
+#   stage: test
+#   script:
+#     - yarn test
 
 build_project:
   <<: *only-default
