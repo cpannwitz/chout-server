@@ -16,8 +16,7 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "incremental": true,
-    "typeRoots": ["src/**/*.d.ts"]
+    "incremental": true
   },
   "exclude": ["node_modules", "dist", "misc"],
   "include": ["src"]
