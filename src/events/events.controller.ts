@@ -1,5 +1,5 @@
-import { Controller, Get, Post, Param, Body, Query, Put, Delete, Inject } from '@nestjs/common'
-import { Logger } from 'winston'
+import { Controller, Get, Post, Param, Body, Query, Put, Delete } from '@nestjs/common'
+import { PinoLogger } from 'nestjs-pino'
 import { Event } from './interfaces/event.interface'
 import { CreateEventDto } from './dto/create-event.dto'
 import { UpdateEventDto } from './dto/update-event.dto'
@@ -7,11 +7,13 @@ import { ListAllEvents } from './dto/listall-events.dto'
 
 @Controller('events')
 export class EventsController {
-  constructor(@Inject('winston') private readonly logger: Logger) {}
+  constructor(private readonly logger: PinoLogger) {
+    logger.setContext(EventsController.name)
+  }
 
   @Get()
   findAll(@Query() query: ListAllEvents): Event[] {
-    this.logger.info(`findAll(): query: `, query)
+    this.logger.debug(`findAll(): query: `, query)
     return []
   }
 

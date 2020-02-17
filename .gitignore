@@ -9,8 +9,10 @@
 /build
 /dist
 /misc
+/miscc
 # Cache
 .cache/
+.data
 
 # Logs
 logs

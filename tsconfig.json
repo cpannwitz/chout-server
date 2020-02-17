@@ -16,7 +16,6 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
     "incremental": true
   },
   "exclude": ["node_modules", "dist", "misc"],
