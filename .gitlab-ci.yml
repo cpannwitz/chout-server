@@ -47,7 +47,7 @@ deploy_image:
   stage: deploy
   image: docker:latest
   services:
-    - docker:dind
+    - docker:19.03.5-dind
   script:
     - echo "$HEROKU_API_KEY" | docker login --username=_ --password-stdin registry.heroku.com
     - docker build --iidfile imageid.txt -t registry.heroku.com/chout-server/web .
