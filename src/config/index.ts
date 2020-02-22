@@ -1,6 +1,7 @@
 import mainConfig from './main.config'
-import swaggerConfig from './swagger.config'
+import dbConfig from './db.config'
 import authConfig from './auth.config'
+import swaggerConfig from './swagger.config'
 import loggerConfig from './logger.config'
 
-export { mainConfig, swaggerConfig, authConfig, loggerConfig }
+export { mainConfig, dbConfig, swaggerConfig, authConfig, loggerConfig }

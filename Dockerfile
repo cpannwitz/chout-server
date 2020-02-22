@@ -29,4 +29,4 @@ COPY . .
 
 COPY --from=development /usr/src/app/dist ./dist
 
-CMD ["yarn", "start:prod"]
+CMD ["yarn", "start:prod:migrations"]

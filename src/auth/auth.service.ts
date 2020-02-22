@@ -29,14 +29,11 @@ export class AuthService {
           username: profile.displayName,
           image: profile.photos ? profile.photos[0].value : null,
           email: profile.emails ? profile.emails[0].value : undefined,
-          // verified:
+          // verified: // TODO: get verified from different providers
           providerId: profile.id,
           provider: provider
         })
-        // user = await this.usersService.registerOAuthUser( new CreateOAuthUserDto ({ provider, providerId: profile.id }));
       }
-      // const user = await this.usersService.findOne({ oAuthLogins: { provider, providerId: profile.id } });
-      // if (!user) { user = await this.usersService.registerOAuthUser( new CreateOAuthUserDto ({ provider, providerId: profile.id })); }
 
       return (user as User).id
     } catch (err) {
