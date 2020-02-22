@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm'
-import { AuthProvider } from '../auth/auth.types'
 
 @Entity('users') // table name in PG
 export class User {
@@ -20,12 +19,8 @@ export class User {
   @Column('boolean', { default: false, select: false })
   verified: boolean
 
-  @Column({
-    type: 'enum',
-    enum: AuthProvider,
-    select: false
-  })
-  provider: AuthProvider
+  @Column('text', { select: false })
+  provider: string
 
   @Column('text', { select: false })
   providerId: string
