@@ -1,5 +1,8 @@
+import { Options } from 'pino-http'
+
 export default () => ({
   logger: {
+    prettyPrint: process.env.IS_LOCAL ? { colorize: true } : false
     /**
      * Optional parameters for `pino-http` module
      * @see https://github.com/pinojs/pino-http#pinohttpopts-stream
@@ -39,5 +42,5 @@ export default () => ({
      * Works with both `Logger` and `PinoLogger`
      */
     // renameContext?: string;
-  }
+  } as Options
 })
