@@ -31,6 +31,7 @@
     "start:docker": "docker-compose up -V -d",
     "start:debug": "nest start --debug 0.0.0.0:9229 --watch",
     "start:prod": "node dist/main",
+    "start:prod:migrations": "run-s migrations:run start:prod",
     "deploy": "heroku container:push web -a chout-server && heroku container:release web -a chout-server",
     "lint": "./node_modules/.bin/eslint \"src/**/*\" --ext .js,.jsx,.ts,.tsx",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css}\"",
@@ -43,6 +44,7 @@
     "db:reset": "run-s db:clean migrations:run db:seed",
     "db:clean": "rimraf .data",
     "db:seed": "ts-node src/_db/run-seed",
+    "migrations:create": "ts-node ./node_modules/typeorm/cli.js migration:create -n $NAME",
     "migrations:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -n $NAME",
     "migrations:show": "ts-node ./node_modules/typeorm/cli.js migration:show",
     "migrations:run": "ts-node ./node_modules/typeorm/cli.js migration:run"
@@ -66,7 +68,6 @@
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.0",
-    "passport-oauth2-refresh": "^1.1.0",
     "pg": "^7.18.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",

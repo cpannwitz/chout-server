@@ -40,7 +40,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, AuthProvider.GOOG
     profile: Profile,
     done: Function
   ) {
-    // TODO: make use of accessToken/refreshToken from provider
     try {
       const id = await this.authService.validateOAuthLogin(profile, AuthProvider.GOOGLE)
 

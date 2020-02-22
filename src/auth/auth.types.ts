@@ -6,5 +6,4 @@ export interface JwtPayload {
 
 export enum AuthProvider {
   GOOGLE = 'google'
-  // JWT = 'jwt'
 }
