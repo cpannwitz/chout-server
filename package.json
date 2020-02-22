@@ -31,7 +31,7 @@
     "start:docker": "docker-compose up -V -d",
     "start:debug": "nest start --debug 0.0.0.0:9229 --watch",
     "start:prod": "node dist/main",
-    "start:prod:migrations": "run-s migrations:run start:prod",
+    "start:prod:migrations": "run-s migrations:run:prod start:prod",
     "deploy": "heroku container:push web -a chout-server && heroku container:release web -a chout-server",
     "lint": "./node_modules/.bin/eslint \"src/**/*\" --ext .js,.jsx,.ts,.tsx",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css}\"",
@@ -47,7 +47,8 @@
     "migrations:create": "ts-node ./node_modules/typeorm/cli.js migration:create -n $NAME",
     "migrations:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -n $NAME",
     "migrations:show": "ts-node ./node_modules/typeorm/cli.js migration:show",
-    "migrations:run": "ts-node ./node_modules/typeorm/cli.js migration:run"
+    "migrations:run:dev": "ts-node ./node_modules/typeorm/cli.js migration:run",
+    "migrations:run:prod": "typeorm migration:run"
   },
   "dependencies": {
     "@godaddy/terminus": "^4.3.1",
