@@ -3,7 +3,3 @@ export interface JwtPayload {
   iat: number
   exp: number
 }
-
-export enum AuthProvider {
-  GOOGLE = 'google'
-}

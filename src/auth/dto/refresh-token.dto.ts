@@ -1,3 +1,9 @@
+import { IsJWT } from 'class-validator'
+import { InputType, Field } from 'type-graphql'
+
+@InputType()
 export class RefreshTokenDto {
-  readonly refreshToken: string
+  @IsJWT()
+  @Field()
+  refreshToken: string
 }
