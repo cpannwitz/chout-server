@@ -7,10 +7,10 @@ import {
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 import { Profile } from 'passport'
-import { AuthProvider } from './auth.types'
+import { JwtPayload } from './auth.types'
 import { UsersService } from '../users/users.service'
 import { User } from '../users/user.entity'
-import { RefreshTokenDto } from './dto/refresh-token.dto'
+import { AuthProvider } from '../common/types/authProvider.type'
 
 @Injectable()
 export class AuthService {
@@ -41,10 +41,18 @@ export class AuthService {
     }
   }
 
-  async createAuthTokens(payload: { sub: string }) {
-    const accessToken = await this.jwtService.signAsync(payload)
-    const refreshToken = await this.jwtService.signAsync(
-      payload,
+  async validateJwtUser(userId: string) {
+    const user = await this.usersService.findOne(userId)
+    if (!user) {
+      throw new UnauthorizedException('Unauthorized')
+    }
+    return user
+  }
+
+  async createAuthTokens(userId: string) {
+    const accessToken = await this.signToken({ sub: userId })
+    const refreshToken = await this.signToken(
+      { sub: userId },
       this.configService.get('auth.jwtRefresh.signOptions')
     )
 
@@ -55,15 +63,15 @@ export class AuthService {
   }
 
   async refreshToken(
-    refreshTokenDto: RefreshTokenDto
+    oldRefreshToken?: string
   ): Promise<{ accessToken: string; refreshToken: string }> {
-    if (!refreshTokenDto.refreshToken) {
+    if (!oldRefreshToken) {
       throw new BadRequestException('Missing RefreshToken')
     }
 
     try {
-      const payload = await this.jwtService.verifyAsync(refreshTokenDto.refreshToken)
-      const { accessToken, refreshToken } = await this.createAuthTokens({ sub: payload.sub })
+      const payload = await this.validateToken(oldRefreshToken)
+      const { accessToken, refreshToken } = await this.createAuthTokens(payload.sub)
       return {
         accessToken,
         refreshToken
@@ -71,5 +79,12 @@ export class AuthService {
     } catch (error) {
       throw new UnauthorizedException('Unauthorized', error.message)
     }
+  }
+
+  async signToken(payload: any, options?: {}) {
+    return this.jwtService.signAsync(payload, options)
+  }
+  async validateToken(token: string) {
+    return this.jwtService.verifyAsync<JwtPayload>(token)
   }
 }

@@ -16,7 +16,8 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "incremental": true
+    "incremental": true,
+    "lib": ["es2016", "esnext.asynciterable"]
   },
   "exclude": ["node_modules", "dist", "misc"],
   "include": ["src"]

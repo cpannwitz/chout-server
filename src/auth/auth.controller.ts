@@ -1,8 +1,9 @@
 import { Controller, Get, UseGuards, HttpStatus, Post, Body } from '@nestjs/common'
+import { ApiExcludeEndpoint } from '@nestjs/swagger'
 import { Redirect } from '@nestjsplus/redirect'
 import { AuthGuard } from '@nestjs/passport'
-import { AuthProvider } from './auth.types'
-import { UserField } from './customDecorators/UserField.decorator'
+import { AuthProvider } from '../common/types/authProvider.type'
+import { UserField } from '../common/decorators/userField-rest.decorator'
 import { ConfigService } from '@nestjs/config'
 import { AuthService } from './auth.service'
 import { RefreshTokenDto } from './dto/refresh-token.dto'
@@ -23,6 +24,7 @@ export class AuthController {
   @Get(AuthProvider.GOOGLE + '/callback')
   @UseGuards(AuthGuard(AuthProvider.GOOGLE))
   @Redirect()
+  @ApiExcludeEndpoint()
   googleLoginCallback(
     @UserField('accessToken') accessToken: string | undefined,
     @UserField('refreshToken') refreshToken: string | undefined
@@ -36,11 +38,11 @@ export class AuthController {
 
   @Post('refresh')
   refreshToken(@Body() refreshTokenDto: RefreshTokenDto) {
-    return this.authService.refreshToken(refreshTokenDto)
+    return this.authService.refreshToken(refreshTokenDto.refreshToken)
   }
 
   @Get('protected')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard(AuthProvider.JWT))
   protectedResource() {
     return 'JWT is working!'
   }
