@@ -1,23 +1,30 @@
 import { ExecutionContext, Injectable } from '@nestjs/common'
-import { AuthGuard } from '@nestjs/passport'
 import { GqlExecutionContext } from '@nestjs/graphql'
+import { AuthGuard } from '@nestjs/passport'
 import { AuthProvider } from '../types/authProvider.type'
+
+function getRequestBlueprint(context: ExecutionContext) {
+  return GqlExecutionContext.create(context).getContext().req
+}
+
+// * +------------------------------------------+
+// * |          AUTHENTICATION: JWT             |
+// * +------------------------------------------+
 
 @Injectable()
 export class GqlAuthGuardJwt extends AuthGuard(AuthProvider.JWT) {
-  getRequest(context: ExecutionContext) {
-    return GqlExecutionContext.create(context).getContext().req
-  }
+  getRequest = getRequestBlueprint
 }
+
+// * +------------------------------------------+
+// * |          AUTHENTICATION: GOOGLE          |
+// * +------------------------------------------+
+
 @Injectable()
 export class GqlAuthGuardGoogle extends AuthGuard(AuthProvider.GOOGLE) {
-  getRequest(context: ExecutionContext) {
-    return GqlExecutionContext.create(context).getContext().req
-  }
+  getRequest = getRequestBlueprint
 }
 @Injectable()
 export class GqlAuthGuardGoogleToken extends AuthGuard(AuthProvider.GOOGLETOKEN) {
-  getRequest(context: ExecutionContext) {
-    return GqlExecutionContext.create(context).getContext().req
-  }
+  getRequest = getRequestBlueprint
 }

@@ -9,7 +9,6 @@ import { JwtService } from '@nestjs/jwt'
 import { Profile } from 'passport'
 import { JwtPayload } from './auth.types'
 import { UsersService } from '../users/users.service'
-import { User } from '../users/user.entity'
 import { AuthProvider } from '../common/types/authProvider.type'
 
 @Injectable()
@@ -20,9 +19,8 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
-  async validateOAuthLogin(profile: Profile, provider: AuthProvider): Promise<string> {
+  async upsertSocialUser(profile: Profile, provider: AuthProvider) {
     try {
-      // ! currently no upsert support, https://github.com/typeorm/typeorm/issues/1090
       let user = await this.usersService.findOneByParams({ provider, providerId: profile.id })
       if (!user) {
         user = await this.usersService.createOne({
@@ -35,18 +33,18 @@ export class AuthService {
         })
       }
 
-      return (user as User).id
-    } catch (err) {
-      throw new InternalServerErrorException('validateOAuthLogin', err.message)
+      return user
+    } catch (error) {
+      throw new InternalServerErrorException('Failed to create social user.', error.message)
     }
   }
 
-  async validateJwtUser(userId: string) {
-    const user = await this.usersService.findOne(userId)
-    if (!user) {
-      throw new UnauthorizedException('Unauthorized')
+  async validateUser(id: string) {
+    try {
+      return await this.usersService.findOne(id)
+    } catch (error) {
+      throw new InternalServerErrorException('Failed to find user.', error.message)
     }
-    return user
   }
 
   async createAuthTokens(userId: string) {
@@ -66,7 +64,7 @@ export class AuthService {
     oldRefreshToken?: string
   ): Promise<{ accessToken: string; refreshToken: string }> {
     if (!oldRefreshToken) {
-      throw new BadRequestException('Missing RefreshToken')
+      throw new BadRequestException('Missing refreshToken.')
     }
 
     try {

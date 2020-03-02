@@ -1,9 +1,11 @@
-import { Mutation, Resolver, Args } from '@nestjs/graphql'
 import { UseGuards, InternalServerErrorException } from '@nestjs/common'
-import { GqlUser } from '../common/decorators/gqlUser.decorator'
-import { GqlAuthGuardGoogleToken } from '../common/guards/gqlAuth.guard'
+import { Mutation, Resolver, Args } from '@nestjs/graphql'
+
 import { User } from '../users/user.entity'
 import { AuthService } from './auth.service'
+
+import { GqlAuthGuardGoogleToken } from '../common/guards/gqlAuth.guard'
+import { GqlUser } from '../common/decorators/gqlUser.decorator'
 import { RefreshTokenDto } from './dto/refresh-token.dto'
 import { AuthTokensDto } from './dto/auth-tokens.dto'
 
@@ -11,17 +13,25 @@ import { AuthTokensDto } from './dto/auth-tokens.dto'
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  @Mutation(_returns => AuthTokensDto)
-  @UseGuards(GqlAuthGuardGoogleToken)
-  async login(@GqlUser() user: User) {
-    if (!user) {
-      throw new InternalServerErrorException('Missing user.')
-    }
-    return await this.authService.createAuthTokens(user.id)
-  }
+  // * +------------------------------------------+
+  // * |          AUTHENTICATION: JWT             |
+  // * +------------------------------------------+
 
   @Mutation(_returns => AuthTokensDto)
   async refreshToken(@Args('refreshTokenDto') refreshTokenDto: RefreshTokenDto) {
     return this.authService.refreshToken(refreshTokenDto.refreshToken)
+  }
+
+  // * +------------------------------------------+
+  // * |        AUTHENTICATION: GOOGLETOKEN       |
+  // * +------------------------------------------+
+
+  @Mutation(_returns => AuthTokensDto)
+  @UseGuards(GqlAuthGuardGoogleToken)
+  async loginGoogleToken(@GqlUser() user: User) {
+    if (!user) {
+      throw new InternalServerErrorException('User not found.')
+    }
+    return await this.authService.createAuthTokens(user.id)
   }
 }
