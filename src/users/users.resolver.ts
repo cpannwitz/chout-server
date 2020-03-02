@@ -1,7 +1,9 @@
+import { UseGuards, InternalServerErrorException } from '@nestjs/common'
 import { Query, Resolver, Args } from '@nestjs/graphql'
+
 import { User } from './user.entity'
 import { UsersService } from './users.service'
-import { UseGuards } from '@nestjs/common'
+
 import { GqlAuthGuardJwt } from '../common/guards/gqlAuth.guard'
 import { GqlUser } from '../common/decorators/gqlUser.decorator'
 
@@ -17,35 +19,9 @@ export class UsersResolver {
   @Query(_returns => User)
   @UseGuards(GqlAuthGuardJwt)
   async getMe(@GqlUser() user: User) {
-    // return this.usersService.findOne(user.id)
+    if (!user) {
+      throw new InternalServerErrorException('User not found.')
+    }
     return user
   }
-
-  // @ResolveProperty()
-  // async posts(@Parent() author) {
-  //   const { id } = author;
-  //   return this.postsService.findAll({ authorId: id });
-  // }
 }
-
-// @UseGuards(GqlAuthGuardJwt)
-// @Query('doSomething')
-// async doSomething(@GqlUser() user: User): Promise<User> {
-//     return await this.userService.findById(user.id);
-//   }
-
-// TODO: https://github.com/nikitakot/nestjs-boilerplate/blob/master/src/post/post.resolver.ts
-/**
- * TODO: !
- * Use https://github.com/iamolegga/nestjs-session for setting up reading and setting to session
- * with JWT, based on example in nestjs-boilerplate repo
- *
- * Find out potential cross usage between passport oauth callbacks and graphql,
- *
- * Find out session setting after oauth callback
- *
- * Find out, what and where to set information in the httponly cookie
- *
- * Find out, if schema first approach is viable via nestjs-docs
- *
- */

@@ -29,21 +29,16 @@ export class GoogleTokenStrategy extends PassportStrategy(Strategy, AuthProvider
     done: Function
   ) {
     try {
-      const id = await this.authService.validateOAuthLogin(profile, AuthProvider.GOOGLE)
+      const user = await this.authService.upsertSocialUser(profile, AuthProvider.GOOGLE)
 
-      const { accessToken, refreshToken } = await this.authService.createAuthTokens(id)
-
-      const user = {
-        id,
-        accessToken,
-        refreshToken
+      if (!user) {
+        return done(new Error('Failed to upsert social user.'), undefined)
       }
 
-      done(null, user)
+      return done(undefined, user)
     } catch (error) {
       this.logger.error(`ERROR | GoogleTokenStrategy: `, error.message)
-      // throw new UnauthorizedException('unauthorized', error.message)
-      done(error, false)
+      return done(error, undefined)
     }
   }
 }

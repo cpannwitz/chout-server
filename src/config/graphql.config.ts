@@ -6,6 +6,9 @@ import corsConfig from './cors.config'
 
 // GraphQL Manager: https://engine.apollographql.com/org/chout
 
+// Help:
+// https://github.com/nikitakot/nestjs-boilerplate/blob/master/src/post/post.resolver.ts
+
 export default registerAs(
   'graphql',
   () =>
@@ -24,7 +27,7 @@ export default registerAs(
         schemaTag: process.env.NODE_ENV
       },
       cors: corsConfig(),
-      context: ({ req }) => ({ req }),
+      context: ({ req, res }) => ({ req, res }),
       debug: process.env.NODE_ENV === 'development' ? true : false,
       playground: process.env.NODE_ENV === 'development' ? true : false
     } as GqlModuleOptions)
