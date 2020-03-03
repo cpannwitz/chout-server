@@ -54,7 +54,7 @@ import configs from './config'
     MulterModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: async (config: ConfigService) => config.get('fileUpload')
+      useFactory: (config: ConfigService) => config.get('fileUpload') || {}
     }),
     AuthModule,
     UsersModule

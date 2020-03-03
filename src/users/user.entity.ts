@@ -18,10 +18,6 @@ export class User {
   updatedAt: Date
 
   // ? account fields - HIDDEN DEFAULT
-  @Field()
-  @Column('text')
-  email: string
-
   @Field(_type => Boolean)
   @Column('boolean', { default: false, select: false })
   verified: boolean
@@ -35,6 +31,14 @@ export class User {
   providerId: string
 
   // ? profile fields
+  @Field(_type => [String])
+  @Column({ type: 'text', array: true, default: () => "ARRAY['user']::text[]" })
+  roles: string[]
+
+  @Field()
+  @Column('text')
+  email: string
+
   @Field()
   @Column('text')
   username: string

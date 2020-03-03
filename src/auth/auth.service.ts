@@ -9,7 +9,7 @@ import { JwtService } from '@nestjs/jwt'
 import { Profile } from 'passport'
 import { JwtPayload } from './auth.types'
 import { UsersService } from '../users/users.service'
-import { AuthProvider } from '../common/types/authProvider.type'
+import { AuthProvider } from '../config/auth.config'
 
 @Injectable()
 export class AuthService {

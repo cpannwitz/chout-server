@@ -31,10 +31,11 @@ type User {
   id: String!
   createdAt: DateTime!
   updatedAt: DateTime!
-  email: String!
   verified: Boolean!
   provider: String!
   providerId: String!
+  roles: [String!]!
+  email: String!
   username: String!
   image: String
 }
