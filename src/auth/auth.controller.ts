@@ -1,11 +1,23 @@
-import { Controller, Get, UseGuards, HttpStatus, Post, Body } from '@nestjs/common'
-import { Redirect } from '@nestjsplus/redirect'
-import { AuthGuard } from '@nestjs/passport'
-import { AuthProvider } from './auth.types'
-import { UserField } from './customDecorators/UserField.decorator'
+import {
+  Controller,
+  Get,
+  UseGuards,
+  HttpStatus,
+  Post,
+  Body,
+  InternalServerErrorException
+} from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
+import { AuthGuard } from '@nestjs/passport'
+import { Redirect } from '@nestjsplus/redirect'
+import { ApiExcludeEndpoint } from '@nestjs/swagger'
+
 import { AuthService } from './auth.service'
+
+import { AuthProvider } from '../common/types/authProvider.type'
+import { RestUser } from '../common/decorators/restUser.decorator'
 import { RefreshTokenDto } from './dto/refresh-token.dto'
+import { User } from '../users/user.entity'
 
 @Controller('auth')
 export class AuthController {
@@ -14,19 +26,35 @@ export class AuthController {
     private readonly authService: AuthService
   ) {}
 
+  // * +------------------------------------------+
+  // * |          AUTHENTICATION: JWT             |
+  // * +------------------------------------------+
+
+  @Post('refresh')
+  async refreshToken(@Body() refreshTokenDto: RefreshTokenDto) {
+    return await this.authService.refreshToken(refreshTokenDto.refreshToken)
+  }
+
+  // * +------------------------------------------+
+  // * |          AUTHENTICATION: GOOGLE          |
+  // * +------------------------------------------+
+
   @Get(AuthProvider.GOOGLE)
   @UseGuards(AuthGuard(AuthProvider.GOOGLE))
-  googleLogin() {
+  async loginGoogle() {
     // initiates the Google OAuth2 login flow via Passport-Strategy
   }
 
-  @Get(AuthProvider.GOOGLE + '/callback')
-  @UseGuards(AuthGuard(AuthProvider.GOOGLE))
+  @ApiExcludeEndpoint()
   @Redirect()
-  googleLoginCallback(
-    @UserField('accessToken') accessToken: string | undefined,
-    @UserField('refreshToken') refreshToken: string | undefined
-  ) {
+  @UseGuards(AuthGuard(AuthProvider.GOOGLE))
+  @Get(AuthProvider.GOOGLE + '/callback')
+  async loginGoogleCallback(@RestUser() user: User) {
+    if (!user) {
+      throw new InternalServerErrorException('User not found.')
+    }
+    const { accessToken, refreshToken } = await this.authService.createAuthTokens(user.id)
+
     const loginSuccessUrl = this.configService.get('auth.loginSuccessUrl')
     return {
       statusCode: HttpStatus.FOUND,
@@ -34,14 +62,16 @@ export class AuthController {
     }
   }
 
-  @Post('refresh')
-  refreshToken(@Body() refreshTokenDto: RefreshTokenDto) {
-    return this.authService.refreshToken(refreshTokenDto)
-  }
+  // * +------------------------------------------+
+  // * |        AUTHENTICATION: GOOGLETOKEN       |
+  // * +------------------------------------------+
 
-  @Get('protected')
-  @UseGuards(AuthGuard('jwt'))
-  protectedResource() {
-    return 'JWT is working!'
+  @Post(AuthProvider.GOOGLETOKEN)
+  @UseGuards(AuthGuard(AuthProvider.GOOGLETOKEN))
+  async loginGoogleToken(@RestUser() user: User) {
+    if (!user) {
+      throw new InternalServerErrorException('User not found.')
+    }
+    return await this.authService.createAuthTokens(user.id)
   }
 }

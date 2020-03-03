@@ -1,7 +1,7 @@
 import { Connection } from 'typeorm'
 
 import { User } from '../users/user.entity'
-import { AuthProvider } from '../auth/auth.types'
+import { AuthProvider } from '../common/types/authProvider.type'
 
 const seed = async (connection: Connection) => {
   await connection.transaction(async transactionalEntityManager => {

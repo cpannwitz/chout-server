@@ -1,6 +1,6 @@
 # https://devcenter.heroku.com/articles/local-development-with-docker-compose
 
-version: '3.7'
+version: "3.7"
 
 services:
   node:
@@ -48,9 +48,9 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
       - 5433:5432
-    # volumes:
-    # - pgdata:/var/lib/postgresql/data
-    # - ./.data/postgres:/var/lib/postgresql/data
+    volumes:
+      # - pgdata:/var/lib/postgresql/data
+      - ./.data/postgres_test:/var/lib/postgresql/data
   pgadmin:
     container_name: pgadmin-container
     image: dpage/pgadmin4
@@ -66,8 +66,20 @@ services:
     restart: always
     depends_on:
       - postgres
+  redis:
+    container_name: redis-container
+    image: redis:6.0-rc1-alpine
+    command: ["redis-server", "--bind", "redis", "--port", "6379"]
+    hostname: redis
+    environment:
+      - REDIS_URL=${REDIS_URL}
+    networks:
+      - mainnet
+    volumes:
+      - redis-data:/data
 networks:
   mainnet:
 volumes:
   # pgdata:
   pgadmin:
+  redis-data:

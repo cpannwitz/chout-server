@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { PassportStrategy } from '@nestjs/passport'
-import { Strategy, VerifyCallback } from 'passport-google-oauth20'
+import { Strategy } from 'passport-google-token'
 import { ConfigService } from '@nestjs/config'
 import { AuthService } from '../auth.service'
 import { AuthProvider } from '../../common/types/authProvider.type'
@@ -11,34 +11,22 @@ import { PinoLogger } from 'nestjs-pino'
 // https://console.developers.google.com/
 
 @Injectable()
-export class GoogleStrategy extends PassportStrategy(Strategy, AuthProvider.GOOGLE) {
+export class GoogleTokenStrategy extends PassportStrategy(Strategy, AuthProvider.GOOGLETOKEN) {
   constructor(
     private readonly configService: ConfigService,
     private readonly authService: AuthService,
     private readonly logger: PinoLogger
   ) {
-    super(configService.get('auth.google'))
-    logger.setContext(GoogleStrategy.name)
-  }
-
-  // ! overriding function to be able to pass params, to ultimately get refresh_token
-  // https://github.com/nestjs/passport/issues/57
-  authenticate(req: any, options: any): any {
-    super.authenticate(
-      req,
-      Object.assign(options, {
-        prompt: 'consent',
-        accessType: 'offline'
-      })
-    )
+    super(configService.get('auth.googletoken'))
+    logger.setContext(GoogleTokenStrategy.name)
   }
 
   async validate(
-    req: any,
+    // req: any,
     accessToken: string,
     refreshToken: string,
     profile: Profile,
-    done: VerifyCallback
+    done: Function
   ) {
     try {
       const user = await this.authService.upsertSocialUser(profile, AuthProvider.GOOGLE)
@@ -49,7 +37,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, AuthProvider.GOOG
 
       return done(undefined, user)
     } catch (error) {
-      this.logger.error(`ERROR | GoogleStrategy: `, error)
+      this.logger.error(`ERROR | GoogleTokenStrategy: `, error.message)
       return done(error, undefined)
     }
   }
