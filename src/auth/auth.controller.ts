@@ -14,7 +14,7 @@ import { ApiExcludeEndpoint } from '@nestjs/swagger'
 
 import { AuthService } from './auth.service'
 
-import { AuthProvider } from '../common/types/authProvider.type'
+import { AuthProvider } from '../config/auth.config'
 import { RestUser } from '../common/decorators/restUser.decorator'
 import { RefreshTokenDto } from './dto/refresh-token.dto'
 import { User } from '../users/user.entity'
