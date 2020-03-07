@@ -13,6 +13,8 @@ export enum ACLResources {
   event = 'event'
 }
 
+// TODO: https://github.com/maticzav/graphql-shield/issues/213
+
 // Documentation:
 // https://github.com/nestjsx/nest-access-control
 // https://github.com/onury/accesscontrol
