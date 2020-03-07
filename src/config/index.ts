@@ -1,35 +1,45 @@
-import mainConfig from './main.config'
-import dbConfig from './db.config'
-import redisConfig from './redis.config'
-import graphqlConfig from './graphql.config'
 import authConfig from './auth.config'
-import swaggerConfig from './swagger.config'
-import loggerConfig from './logger.config'
+import accessControlConfig from './accessControl.config'
+import corsConfig from './cors.config'
+import dbConfig from './db.config'
 import fileUploadConfig from './fileUpload.config'
-import rateLimitConfig from './rateLimit.config'
+import graphqlConfig from './graphql.config'
+import graphqlAccessControlConfig from './graphqlAccessControl.config'
 import httpRequestConfig from './httpRequest.config'
+import loggerConfig from './logger.config'
+import mainConfig from './main.config'
+import rateLimitConfig from './rateLimit.config'
+import redisConfig from './redis.config'
+import swaggerConfig from './swagger.config'
 
 export {
-  mainConfig,
-  dbConfig,
-  redisConfig,
-  graphqlConfig,
-  swaggerConfig,
   authConfig,
-  loggerConfig,
+  accessControlConfig,
+  corsConfig,
+  dbConfig,
   fileUploadConfig,
+  graphqlConfig,
+  graphqlAccessControlConfig,
+  httpRequestConfig,
+  loggerConfig,
+  mainConfig,
   rateLimitConfig,
-  httpRequestConfig
+  redisConfig,
+  swaggerConfig
 }
 
 export default [
-  mainConfig,
-  dbConfig,
-  redisConfig,
-  graphqlConfig,
   authConfig,
-  loggerConfig,
+  accessControlConfig,
+  corsConfig,
+  dbConfig,
   fileUploadConfig,
+  graphqlConfig,
+  graphqlAccessControlConfig,
+  httpRequestConfig,
+  loggerConfig,
+  mainConfig,
   rateLimitConfig,
-  httpRequestConfig
+  redisConfig
+  // swaggerConfig
 ]

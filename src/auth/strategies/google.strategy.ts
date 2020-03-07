@@ -1,6 +1,6 @@
-import { Injectable, UnauthorizedException, InternalServerErrorException } from '@nestjs/common'
+import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { PassportStrategy } from '@nestjs/passport'
-import { Strategy, VerifyCallback } from 'passport-google-oauth20'
+import { Strategy } from 'passport-google-oauth20'
 import { ConfigService } from '@nestjs/config'
 import { AuthService } from '../auth.service'
 import { AuthProvider } from '../../config/auth.config'
@@ -40,21 +40,11 @@ export class GoogleStrategy extends PassportStrategy(Strategy, AuthProvider.GOOG
     profile: Profile
     // done: VerifyCallback
   ) {
-    // try {
     const user = await this.authService.upsertSocialUser(profile, AuthProvider.GOOGLE)
 
     if (!user) {
       throw new UnauthorizedException()
-
-      // return done(new Error('Failed to upsert social user.'), undefined)
     }
     return user
-
-    // return done(undefined, user)
-    // } catch (error) {
-    // this.logger.error(`ERROR | GoogleStrategy: `, error)
-    // return done(error, undefined)
-    // throw new InternalServerErrorException()
-    // }
   }
 }

@@ -11,7 +11,8 @@ const seed = async (connection: Connection) => {
       username: 'testname',
       email: 'test@email.de',
       providerId: '123',
-      provider: AuthProvider.GOOGLE
+      provider: AuthProvider.GOOGLE,
+      roles: ['user']
     })
     await transactionalEntityManager.save(user)
   })

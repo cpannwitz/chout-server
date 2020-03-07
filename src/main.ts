@@ -10,27 +10,33 @@ import rateLimit from 'express-rate-limit'
 import { SwaggerModule } from '@nestjs/swagger'
 import swaggerConfig from './config/swagger.config'
 
+// create NestJS server, apply middleware and utilities, start server async
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
+
+  // apply custom logger (Pino)
   app.useLogger(app.get(Logger))
 
-  const config = app.get(ConfigService)
-  const corsConfig = config.get('cors')
-  const rateLimitConfig = config.get('rateLimit')
-  const port = config.get('system.port')
-  const host = config.get('system.host')
-
+  // apply global validation via class-validator for all classes
   app.useGlobalPipes(new ValidationPipe())
 
+  // get global config from config module
+  const config = app.get(ConfigService)
+
+  // add middleware with config
+  const corsConfig = config.get('cors')
+  const rateLimitConfig = config.get('rateLimit')
   app.enableCors(corsConfig)
   app.use(compression())
   app.use(helmet())
   app.use(rateLimit(rateLimitConfig))
-
-  SwaggerModule.setup('api', app, swaggerConfig(app))
-
   app.enableShutdownHooks()
 
+  // apply Swagger api documentation
+  SwaggerModule.setup('api', app, swaggerConfig(app))
+
+  const port = config.get('system.port')
+  const host = config.get('system.host')
   await app.listen(port, host)
 }
 bootstrap()

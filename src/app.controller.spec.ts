@@ -19,7 +19,7 @@ describe('AppController', () => {
     it('should return "Hello World!"', () => {
       const res = httpMocks.createResponse()
       res.redirect = jest.fn()
-      appController.getHello(res)
+      appController.defaultRoute(res)
       expect(res.redirect.mock.calls.length).toEqual(1)
     })
   })
