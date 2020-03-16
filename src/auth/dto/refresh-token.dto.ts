@@ -1,5 +1,5 @@
 import { IsJWT } from 'class-validator'
-import { InputType, Field } from 'type-graphql'
+import { InputType, Field } from '@nestjs/graphql'
 
 @InputType()
 export class RefreshTokenDto {

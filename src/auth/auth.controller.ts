@@ -15,7 +15,7 @@ import { ApiExcludeEndpoint } from '@nestjs/swagger'
 import { AuthService } from './auth.service'
 
 import { AuthProvider } from '../config/auth.config'
-import { RestUser } from '../common/decorators/restUser.decorator'
+import { UserDecorator } from '../common/decorators/user.decorator'
 import { RefreshTokenDto } from './dto/refresh-token.dto'
 import { User } from '../users/user.entity'
 
@@ -49,7 +49,7 @@ export class AuthController {
   @Redirect()
   @UseGuards(AuthGuard(AuthProvider.GOOGLE))
   @Get(AuthProvider.GOOGLE + '/callback')
-  async loginGoogleCallback(@RestUser() user: User) {
+  async loginGoogleCallback(@UserDecorator() user: User) {
     if (!user) {
       throw new InternalServerErrorException('User not found.')
     }
@@ -68,7 +68,7 @@ export class AuthController {
 
   @Post(AuthProvider.GOOGLETOKEN)
   @UseGuards(AuthGuard(AuthProvider.GOOGLETOKEN))
-  async loginGoogleToken(@RestUser() user: User) {
+  async loginGoogleToken(@UserDecorator() user: User) {
     if (!user) {
       throw new InternalServerErrorException('User not found.')
     }
