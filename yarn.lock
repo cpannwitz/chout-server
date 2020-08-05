@@ -1345,13 +1345,20 @@ buffer@^5.1.0, buffer@^5.2.1:
     base64-js "^1.0.2"
     ieee754 "^1.1.4"
 
-busboy@^0.2.11, busboy@^0.2.14:
+busboy@^0.2.11:
   version "0.2.14"
   resolved "https://registry.yarnpkg.com/busboy/-/busboy-0.2.14.tgz#6c2a622efcf47c57bbbe1e2a9c37ad36c7925453"
   integrity sha1-bCpiLvz0fFe7vh4qnDetNseSVFM=
   dependencies:
     dicer "0.2.5"
     readable-stream "1.1.x"
+
+busboy@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/busboy/-/busboy-0.3.1.tgz#170899274c5bf38aae27d5c62b71268cd585fd1b"
+  integrity sha512-y7tTxhGKXcyBxRKAni+awqx8uqaJKrSFSNFSeRG5CsWNdmy2BIK+6VGWEW7TZnIO/533mtMEA4rOevQV815YJw==
+  dependencies:
+    dicer "0.3.0"
 
 bytes@3.0.0:
   version "3.0.0"
@@ -2095,6 +2102,13 @@ dicer@0.2.5:
     readable-stream "1.1.x"
     streamsearch "0.1.2"
 
+dicer@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/dicer/-/dicer-0.3.0.tgz#eacd98b3bfbf92e8ab5c2fdb71aaac44bb06b872"
+  integrity sha512-MdceRRWqltEG2dZqO769g27N/3PXfcKl04VhYnBlo2YhH7zPi88VebsjTKclaOyiuMaGU72hTfw3VkUitGcVCA==
+  dependencies:
+    streamsearch "0.1.2"
+
 diff-sequences@^24.3.0:
   version "24.3.0"
   resolved "https://registry.yarnpkg.com/diff-sequences/-/diff-sequences-24.3.0.tgz#0f20e8a1df1abddaf4d9c226680952e64118b975"
@@ -2584,12 +2598,12 @@ expect@^24.1.0, expect@^24.8.0:
     jest-message-util "^24.8.0"
     jest-regex-util "^24.3.0"
 
-express-fileupload@^1.1.5:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/express-fileupload/-/express-fileupload-1.1.5.tgz#d10ccf389dc6b6d39de8a94598b05db4eafd18e1"
-  integrity sha512-ZYxGkXm9y1dSMgbW+lwvtqld+dulYm3OU1GQF9n6NNEwulHTPUsz4mHGG5/LiUszz5jnh/j8AcpLFUdaj8UUtQ==
+express-fileupload@^1.1.9:
+  version "1.1.9"
+  resolved "https://registry.yarnpkg.com/express-fileupload/-/express-fileupload-1.1.9.tgz#e798e9318394ed5083e56217ad6cda576da465d2"
+  integrity sha512-f2w0aoe7lj3NeD8a4MXmYQsqir3Z66I08l9AKq04QbFUAjeZNmPwTlR5Lx2NGwSu/PslsAjGC38MWzo5tTjoBg==
   dependencies:
-    busboy "^0.2.14"
+    busboy "^0.3.1"
 
 express-jwt@^5.3.1:
   version "5.3.1"
