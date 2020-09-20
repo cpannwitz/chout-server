@@ -1,4 +1,4 @@
-image: node:12.14.1-alpine
+image: node:14.9.0-alpine
 
 cache:
   key: "$CI_BUILD_REF_NAME"

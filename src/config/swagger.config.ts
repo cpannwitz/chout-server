@@ -1,5 +1,5 @@
 import { INestApplication } from '@nestjs/common'
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
+import { SwaggerModule, DocumentBuilder, OpenAPIObject } from '@nestjs/swagger'
 
 export default (app: INestApplication) => {
   const options = new DocumentBuilder()
@@ -8,5 +8,6 @@ export default (app: INestApplication) => {
     .setVersion(process.env.API_VERSION || 'v1')
     .build()
   const document = SwaggerModule.createDocument(app, options)
-  return document
+  SwaggerModule.setup('api', app, document)
+  // return document
 }

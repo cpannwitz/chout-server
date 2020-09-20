@@ -1,16 +1,16 @@
-import { Module, HttpModule } from '@nestjs/common'
+import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
+import { LoggerModule } from 'nestjs-pino'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { GraphQLModule } from '@nestjs/graphql'
-import { RedisModule } from 'nestjs-redis'
 import { MulterModule } from '@nestjs/platform-express'
-import { LoggerModule } from 'nestjs-pino'
+import { RedisModule } from 'nestjs-redis'
 
+import configs from './config'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { AuthModule } from './auth/auth.module'
 import { UsersModule } from './users/users.module'
-import configs from './config'
 
 @Module({
   imports: [
@@ -30,25 +30,20 @@ import configs from './config'
       inject: [ConfigService],
       useFactory: (config: ConfigService) => config.get('typeorm') || {}
     }),
-    RedisModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => config.get('redis') || {}
-    }),
     GraphQLModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => config.get('graphql') || {}
     }),
-    HttpModule.registerAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => config.get('httpRequest') || {}
-    }),
     MulterModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => config.get('fileUpload') || {}
+    }),
+    RedisModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => config.get('redis') || {}
     }),
     AuthModule,
     UsersModule

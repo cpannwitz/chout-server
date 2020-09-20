@@ -25,7 +25,7 @@ export default registerAs(
       },
       engine: {
         apiKey: process.env.ENGINE_API_KEY,
-        schemaTag: process.env.NODE_ENV
+        graphVariant: process.env.NODE_ENV
       },
       cors: corsConfig(),
       debug: process.env.NODE_ENV === 'development' ? true : false,

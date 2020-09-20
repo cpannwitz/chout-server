@@ -15,7 +15,7 @@ export default () => ({
     ssl: !process.env.IS_LOCAL,
     synchronize: false,
     dropSchema: false,
-    logging: true,
+    logging: 'all',
     migrationsRun: false,
     entities: [__dirname + '/../**/*.entity{.ts,.js}'],
     subscribers: [__dirname + '/../_db/subscribers/**/*.{.ts,.js}'],

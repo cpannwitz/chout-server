@@ -1,4 +1,4 @@
-FROM node:12.14.1-alpine AS development
+FROM node:14.9.0-alpine AS development
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
@@ -14,7 +14,7 @@ EXPOSE 4000
 
 RUN yarn build
 
-FROM node:12.14.1-alpine AS production
+FROM node:14.9.0-alpine AS production
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}

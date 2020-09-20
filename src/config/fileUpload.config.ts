@@ -1,8 +1,6 @@
 import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface'
 import { registerAs } from '@nestjs/config'
 
-// TODO: add redis as memorystorage
-
 export default registerAs(
   'fileUpload',
   () =>
