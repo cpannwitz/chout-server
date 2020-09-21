@@ -7,7 +7,7 @@ import corsConfig from './cors.config'
 import graphqlAccessControlConfig from './graphqlAccessControl.config'
 // import { join } from 'path'
 
-// GraphQL Manager: https://engine.apollographql.com/org/chout
+// GraphQL Manager: https://studio.apollographql.com/org/chout
 
 export default registerAs(
   'graphql',

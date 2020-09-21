@@ -4,14 +4,15 @@ import { ConfigService } from '@nestjs/config'
 
 import { AppModule } from './app.module'
 import configureSwagger from './config/swagger.config'
+import configureExternalLogger from './config/externallogger.config'
 
 import compression from 'compression'
 import helmet from 'helmet'
 
-
 // create NestJS server, apply middleware and utilities, start server async
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
+  configureExternalLogger()
 
   // apply global validation via class-validator for all classes
   app.useGlobalPipes(new ValidationPipe())

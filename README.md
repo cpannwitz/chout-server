@@ -47,11 +47,18 @@ Configuration files for all kinds of services and modules are found in `src/conf
 REST is primarily used for OAuth Authorization Code Flow, which needs callbacks.
 GraphQL is primarily used for everything else, which is API related.
 
+## Logging
+### Internal - Pino
+NestJS provides its own logging for system notifications.
+Furthermore we use [nestjs-pino](https://github.com/iamolegga/nestjs-pino) for request and general error logging. (see `app.module.ts`)
+Every module which wants to log must inject the logger module.
+
+### External - Sentry
+External logging is done by [nest-raven](https://www.npmjs.com/package/nest-raven), which provides Sentry configuration and interceptor.
+(see `main.ts` and `app.module.ts`)
+Sentry is found here: [sentry.io](https://sentry.io/)
+
 ## Additional Modules
 - Health checks via Terminus
 - User module for authentication
 - Basic Event module for data entities
-
-## Todo
-- Tests
-- more GraphQL functionality

@@ -5,7 +5,7 @@ import {
   UnauthorizedException
 } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { JwtService } from '@nestjs/jwt'
+import { JwtService, JwtSignOptions } from '@nestjs/jwt'
 import { Profile } from 'passport'
 import { JwtPayload } from './auth.types'
 import { UsersService } from '../users/users.service'
@@ -79,7 +79,7 @@ export class AuthService {
     }
   }
 
-  async signToken(payload: any, options?: {}) {
+  async signToken(payload: any, options?: JwtSignOptions) {
     return this.jwtService.signAsync(payload, options)
   }
   async validateToken(token: string) {
