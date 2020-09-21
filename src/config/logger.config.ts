@@ -6,11 +6,14 @@ export default registerAs(
   () =>
     ({
       pinoHttp: {
-        prettyPrint: process.env.NODE_ENV === 'development' ? {
-          translateTime: true,
-          levelFirst: true,
-          colorize: true
-        } : false
-      },
+        prettyPrint:
+          process.env.NODE_ENV === 'development'
+            ? {
+                translateTime: true,
+                levelFirst: true,
+                colorize: true
+              }
+            : false
+      }
     } as Params)
 )
