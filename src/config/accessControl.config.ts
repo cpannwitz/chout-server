@@ -9,8 +9,7 @@ export enum ACLRoles {
 }
 
 export enum ACLResources {
-  user = 'user',
-  event = 'event'
+  user = 'user'
 }
 
 // implement into app.module.ts
@@ -39,22 +38,6 @@ export default registerAs('accessControl', () => {
     .createAny(ACLResources.user)
     .updateAny(ACLResources.user)
     .deleteAny(ACLResources.user)
-    // Events
-    .grant(ACLRoles.user)
-    .readAny(ACLResources.event)
-    .createAny(ACLResources.event)
-    .updateOwn(ACLResources.event)
-    .deleteOwn(ACLResources.event)
-    .grant(ACLRoles.organisation)
-    .extend(ACLRoles.user)
-    .grant(ACLRoles.moderator)
-    .extend(ACLRoles.user)
-    .readAny(ACLResources.event)
-    .createAny(ACLResources.event)
-    .updateAny(ACLResources.event)
-    .deleteAny(ACLResources.event)
-    .grant(ACLRoles.admin)
-    .extend(ACLRoles.moderator)
 
   return roles
 })
