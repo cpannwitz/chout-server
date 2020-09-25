@@ -45,8 +45,6 @@
     "db:reset": "run-s db:clean migrations:run db:seed",
     "db:clean": "rimraf .data",
     "db:seed": "ts-node src/_db/run-seed",
-    "schema:generate:dev": "ts-node src/generate-typings",
-    "schema:generate:prod": "node dist/generate-typings",
     "migrations:create": "ts-node ./node_modules/typeorm/cli.js migration:create -n $NAME",
     "migrations:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -n $NAME",
     "migrations:show": "ts-node ./node_modules/typeorm/cli.js migration:show",

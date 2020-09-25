@@ -31,14 +31,8 @@ export default registerAs(
       debug: process.env.NODE_ENV === 'development' ? true : false,
       playground: process.env.NODE_ENV === 'development' ? true : false,
       introspection: process.env.NODE_ENV === 'development' ? true : false,
-      // * For schema-first definition
-      // typePaths: ['./**/*.graphql'],
-      // definitions: {
-      //   path: join(process.cwd(), 'src/graphql.schema.ts'),
-      //   outputAs: 'class'
-      // }
       // * For code-first definition
-      autoSchemaFile: 'schema.gql', // autoSchemaFile: true, | https://github.com/nestjs/graphql/issues/205
+      autoSchemaFile: 'schema.gql', // autoSchemaFile: true, | https://github.com/nestjs/graphql/issues/205 | https://github.com/nestjs/graphql/issues/721
       buildSchemaOptions: {
         dateScalarMode: 'isoDate'
       },

@@ -3,6 +3,8 @@ import { GqlExecutionContext } from '@nestjs/graphql'
 import { AuthGuard } from '@nestjs/passport'
 import { AuthProvider } from '../../config/auth.config'
 
+// See: https://github.com/nestjs/graphql/issues/48#issuecomment-606361795
+
 function getRequestBlueprint(context: ExecutionContext) {
   return GqlExecutionContext.create(context).getContext().req
 }
