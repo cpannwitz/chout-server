@@ -20,10 +20,10 @@ Additionally, Gitlab CI is used to deploy the built image.
 
 ## Deployment / Workflow
 1. Fill in `.env` according to `.env.example`, for all services and configs
-2. Run `yarn start:docker:full` if you want to use Docker, or `yarn start:dev` standalone.
-3. To stop Docker, run `yarn stop:docker`
-4. If there are database schema changes, run `yarn migrations:generate` with the docker instance running, to generate needed migrations.
-5. To apply migrations locally, run `yarn migrations:run:dev`
+2. Run `npm run start:docker:full` if you want to use Docker, or `npm run start:dev` standalone.
+3. To stop Docker, run `npm run stop:docker`
+4. If there are database schema changes, run `npm run migrations:generate` with the docker instance running, to generate needed migrations.
+5. To apply migrations locally, run `npm run migrations:run:dev`
 6. Git commit and push changes, Gitlab CI will build the image and send it right to the deployment destination.
 
 > For successful deploy you need to provide your HEROKU_API_KEY to gitlab CI env variables!

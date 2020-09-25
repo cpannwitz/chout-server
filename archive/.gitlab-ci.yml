@@ -25,19 +25,19 @@ prepation:
   <<: *only-default
   stage: prepare
   script:
-    - yarn install
+    - npm run install
 
 # test_project:
 #   <<: *only-default
 #   stage: test
 #   script:
-#     - yarn test
+#     - npm run test
 
 build_project:
   <<: *only-default
   stage: build
   script:
-    - yarn build
+    - npm run build
   artifacts:
     paths:
       - dist/

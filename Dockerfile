@@ -4,15 +4,14 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 COPY package*.json ./
-COPY yarn.lock ./
 
-RUN yarn install --network-concurrency=1
+RUN npm run install --network-concurrency=1
 
 COPY . .
 
 EXPOSE 4000
 
-RUN yarn build
+RUN npm run build
 
 FROM node:14.9.0-alpine AS production
 
@@ -23,10 +22,10 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN yarn install --production=true
+RUN npm run install --production=true
 
 COPY . .
 
 COPY --from=development /usr/src/app/dist ./dist
 
-CMD ["yarn", "start:prod:migrations"]
+CMD ["npm", "run", "start:prod:migrations"]

@@ -18,7 +18,7 @@ services:
     depends_on:
       - postgres
     env_file: .env
-    command: yarn start:debug
+    command: npm run start:debug
     networks:
       - mainnet
   postgres:
