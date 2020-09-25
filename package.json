@@ -9,8 +9,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=13.0.0",
-    "yarn": "1.x"
+    "node": ">=13.0.0"
   },
   "husky": {
     "hooks": {
@@ -19,8 +18,8 @@
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,css}": [
-      "yarn format",
-      "yarn lint"
+      "npm run format",
+      "npm run lint"
     ]
   },
   "scripts": {
