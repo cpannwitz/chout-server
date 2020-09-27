@@ -51,7 +51,6 @@
     "migrations:run:prod": "typeorm migration:run"
   },
   "dependencies": {
-    "@godaddy/terminus": "^4.4.1",
     "@mikro-orm/core": "^4.0.7",
     "@mikro-orm/nestjs": "^4.2.0",
     "@mikro-orm/postgresql": "^4.0.7",
