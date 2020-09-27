@@ -1,14 +1,12 @@
 require('dotenv/config')
 
-const { DATABASE_URL, DATABASE_URL_EXT, TEST_DATABASE_URL_EXT, IS_LOCAL, NODE_ENV } = process.env
-const BASE_DIR = NODE_ENV === 'production' ? 'dist' : 'src'
-const BASE_EXT = NODE_ENV === 'production' ? '.js' : '.ts'
-const BASE_URL =
-  NODE_ENV === 'production'
-    ? DATABASE_URL
-    : NODE_ENV === 'test'
-    ? TEST_DATABASE_URL_EXT
-    : DATABASE_URL_EXT
+const { DATABASE_URL, DATABASE_TEST_URL, IS_LOCAL, NODE_ENV } = process.env
+const isProdEnv = NODE_ENV === 'production'
+const isTestEnv = NODE_ENV === 'test'
+
+const BASE_DIR = isProdEnv ? 'dist' : 'src'
+const BASE_EXT = isProdEnv ? '.js' : '.ts'
+const BASE_URL = isTestEnv ? DATABASE_TEST_URL : DATABASE_URL
 
 module.exports = {
   type: 'postgres',

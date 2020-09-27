@@ -5,7 +5,7 @@ import { LoggerModule } from 'nestjs-pino'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { GraphQLModule } from '@nestjs/graphql'
 import { MulterModule } from '@nestjs/platform-express'
-import { RedisModule } from 'nestjs-redis'
+// import { RedisModule } from 'nestjs-redis'
 import { RavenModule, RavenInterceptor } from 'nest-raven'
 
 import configs from './config'
@@ -43,11 +43,11 @@ import { UsersModule } from './users/users.module'
       inject: [ConfigService],
       useFactory: (config: ConfigService) => config.get('fileUpload') || {}
     }),
-    RedisModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => config.get('redis') || {}
-    }),
+    // RedisModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   inject: [ConfigService],
+    //   useFactory: (config: ConfigService) => config.get('redis') || {}
+    // }),
     AuthModule,
     UsersModule
   ],
