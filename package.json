@@ -25,10 +25,10 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
+    "build:docker": "docker-compose build",
     "start": "nest start",
     "start:dev": "nest start --watch",
-    "start:docker": "docker-compose up -V -d && docker-compose logs -f node",
-    "start:docker:full": "docker-compose up --build -V -d && docker-compose logs -f -t node",
+    "start:docker": "docker-compose up -V -d && docker-compose logs -f -t node",
     "stop:docker": "docker-compose down",
     "start:debug": "NODE_OPTIONS='--trace-warnings' nest start --debug 0.0.0.0:9229 --watch",
     "start:prod": "node dist/main",

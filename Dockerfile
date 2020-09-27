@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm run install --network-concurrency=1
+RUN npm install --network-concurrency=1
 
 COPY . .
 
@@ -22,7 +22,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm run install --production=true
+RUN npm install --production=true
 
 COPY . .
 
