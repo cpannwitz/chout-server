@@ -24,10 +24,10 @@
   },
   "scripts": {
     "prebuild": "rimraf dist",
-    "postinstall": "run-s prisma:generate prisma:up",
-    "bare_postinstall": "npm run prisma:generate",
+    "postinstall": "npm run prisma:generate",
     "build": "nest build",
     "build:docker": "docker-compose build",
+    "heroku-postbuild": "run-s build prisma:generate prisma:up",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:docker": "docker-compose up -V -d && docker-compose logs -f -t node",
