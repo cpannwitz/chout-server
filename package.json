@@ -33,7 +33,7 @@
     "start:docker": "docker-compose up -V -d && docker-compose logs -f -t node",
     "stop:docker": "docker-compose down",
     "start:debug": "NODE_OPTIONS='--trace-warnings' nest start --debug 0.0.0.0:9229 --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "node dist/src/main",
     "start:prod:migrations": "run-s migrations:run:prod start:prod",
     "lint": "./node_modules/.bin/eslint \"src/**/*\" --ext .js,.jsx,.ts,.tsx",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css}\"",
