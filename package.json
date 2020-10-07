@@ -24,7 +24,8 @@
   },
   "scripts": {
     "prebuild": "rimraf dist",
-    "postinstall": "npm run prisma:generate",
+    "postinstall": "run-s prisma:generate prisma:up",
+    "bare_postinstall": "npm run prisma:generate",
     "build": "nest build",
     "build:docker": "docker-compose build",
     "start": "nest start",
