@@ -14,6 +14,7 @@ export default registerAs(
                 colorize: true
               }
             : false
-      }
+      },
+      exclude: ['/graphql', '/api']
     } as Params)
 )
