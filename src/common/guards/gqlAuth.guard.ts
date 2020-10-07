@@ -1,7 +1,12 @@
 import { ExecutionContext, Injectable } from '@nestjs/common'
 import { GqlExecutionContext } from '@nestjs/graphql'
 import { AuthGuard } from '@nestjs/passport'
-import { AuthProvider } from '../../config/auth.config'
+
+export enum AuthProvider {
+  GOOGLE = 'google',
+  GOOGLETOKEN = 'googletoken',
+  JWT = 'JWT'
+}
 
 // See: https://github.com/nestjs/graphql/issues/48#issuecomment-606361795
 

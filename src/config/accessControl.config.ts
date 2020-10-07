@@ -1,6 +1,7 @@
 import { registerAs } from '@nestjs/config'
 import { RolesBuilder } from 'nest-access-control'
 
+// TODO: use schema role
 export enum ACLRoles {
   user = 'user',
   organisation = 'organisation',
@@ -12,7 +13,7 @@ export enum ACLResources {
   user = 'user'
 }
 
-// implement into app.module.ts
+// TODO: implement into app.module.ts
 // AccessControlModule.forRootAsync({
 //   inject: [ConfigService],
 //   useFactory: (config: ConfigService) => config.get('accessControl') || ({} as RolesBuilder)
