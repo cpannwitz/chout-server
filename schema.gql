@@ -5,15 +5,10 @@
 """Date custom scalar type"""
 scalar Date
 
-input GetUserInput {
-  id: String!
-}
-
 type Query {
   hello(name: String!): String!
   helloWorld: String!
   me: User!
-  user(data: GetUserInput!): User
 }
 
 """User role"""
