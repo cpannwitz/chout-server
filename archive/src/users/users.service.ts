@@ -1,30 +1,30 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { User } from './user.entity'
+import { Users } from './users.entity'
 import { Repository, DeleteResult } from 'typeorm'
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User)
-    private readonly usersRepository: Repository<User>
+    @InjectRepository(Users)
+    private readonly usersRepository: Repository<Users>
   ) {}
 
   // ? Single Entity Operations
-  findOne(id: string): Promise<User | undefined> {
+  findOne(id: string): Promise<Users | undefined> {
     return this.usersRepository.findOne(id)
   }
 
-  findOneByParams(user: Partial<User>): Promise<User | undefined> {
+  findOneByParams(user: Partial<Users>): Promise<Users | undefined> {
     return this.usersRepository.findOne(user)
   }
 
-  createOne(data: Partial<User>): Promise<User | undefined> {
+  createOne(data: Partial<Users>): Promise<Users | undefined> {
     const user = this.usersRepository.create(data)
     return this.usersRepository.save(user)
   }
 
-  async updateOne(id: string, data: Partial<User>): Promise<User | undefined> {
+  async updateOne(id: string, data: Partial<Users>): Promise<Users | undefined> {
     const user = await this.usersRepository.findOne(id)
     if (user) {
       this.usersRepository.merge(user, data)
@@ -37,7 +37,7 @@ export class UsersService {
   }
 
   // ? Multi Entity Operations
-  findAll(): Promise<User[]> {
+  findAll(): Promise<Users[]> {
     return this.usersRepository.find()
   }
 }

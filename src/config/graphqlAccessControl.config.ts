@@ -13,15 +13,17 @@ export default registerAs('graphqlAccessControl', () => {
   })
 
   const permissions = shield({
-    Query: {
-      getUser: and(isAuthenticated, isAdmin),
-      getMe: isAuthenticated
-    },
-    Mutation: {
-      refreshToken: isPublic,
-      loginGoogleToken: isPublic
-    },
-    User: isAuthenticated
+    // Query: {
+    // getUser: and(isAuthenticated, isAdmin),
+    // getMe: isAuthenticated
+    // },
+    // Mutation: {
+    // refreshToken: isPublic,
+    // loginGoogleToken: isPublic
+    // }
+    // User: {
+    //   // user: isAuthenticated
+    // }
   })
 
   return permissions

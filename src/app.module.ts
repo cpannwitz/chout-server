@@ -2,19 +2,21 @@ import { APP_INTERCEPTOR } from '@nestjs/core'
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { LoggerModule } from 'nestjs-pino'
-import { TypeOrmModule } from '@nestjs/typeorm'
 import { GraphQLModule } from '@nestjs/graphql'
-import { MulterModule } from '@nestjs/platform-express'
 import { TerminusModule } from '@nestjs/terminus'
-// import { RedisModule } from 'nestjs-redis'
 import { RavenModule, RavenInterceptor } from 'nest-raven'
+// import { RedisModule } from 'nestjs-redis'
 
 import configs from './config'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
-import { AuthModule } from './auth/auth.module'
-import { UsersModule } from './users/users.module'
+import { AppResolver } from './app.resolver'
+
 import { HealthController } from './health/health.controller'
+import { UserModule } from './user/user.module'
+import { OrmModule } from './orm/orm.module'
+
+import { DateScalar } from './common/scalars/date.scalar'
 
 @Module({
   imports: [
@@ -31,28 +33,18 @@ import { HealthController } from './health/health.controller'
       inject: [ConfigService],
       useFactory: (config: ConfigService) => config.get('logger') || {}
     }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => config.get('typeorm') || {}
-    }),
+    OrmModule,
     GraphQLModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => config.get('graphql') || {}
-    }),
-    MulterModule.registerAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => config.get('fileUpload') || {}
     }),
     // RedisModule.forRootAsync({
     //   imports: [ConfigModule],
     //   inject: [ConfigService],
     //   useFactory: (config: ConfigService) => config.get('redis') || {}
     // }),
-    AuthModule,
-    UsersModule
+    UserModule
   ],
   controllers: [AppController, HealthController],
   providers: [
@@ -61,7 +53,9 @@ import { HealthController } from './health/health.controller'
       provide: APP_INTERCEPTOR,
       useValue: new RavenInterceptor()
     },
-    AppService
+    AppService,
+    AppResolver,
+    DateScalar
   ]
 })
 export class AppModule {}
