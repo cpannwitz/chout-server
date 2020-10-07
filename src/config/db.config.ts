@@ -1,4 +1,4 @@
-import { TypeOrmModuleOptions } from '@nestjs/typeorm'
+// import { TypeOrmModuleOptions } from '@nestjs/typeorm'
 
 export default () => ({
   database: {
@@ -20,5 +20,5 @@ export default () => ({
     entities: [__dirname + '/../**/*.entity{.ts,.js}'],
     subscribers: [__dirname + '/../_db/subscribers/**/*.{.ts,.js}'],
     migrations: [__dirname + '/../_db/migrations/**/*{.ts,.js}']
-  } as TypeOrmModuleOptions
+  }
 })

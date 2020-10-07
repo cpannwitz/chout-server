@@ -3,7 +3,7 @@ import { Field, ObjectType } from '@nestjs/graphql'
 
 @ObjectType()
 @Entity('users') // table name in PG
-export class User {
+export class Users {
   // ? entity fields
   @Field()
   @PrimaryGeneratedColumn('uuid')

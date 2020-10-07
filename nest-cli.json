@@ -8,7 +8,7 @@
       {
         "name": "@nestjs/graphql/plugin",
         "options": {
-          "typeFileNameSuffix": [".input.ts", ".args.ts", ".entity.ts", ".model.ts"]
+          "typeFileNameSuffix": [".input.ts", ".args.ts", ".entity.ts", ".model.ts", ".resolver.ts"]
         }
       }
     ]

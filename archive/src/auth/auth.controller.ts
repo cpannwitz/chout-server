@@ -17,7 +17,7 @@ import { AuthService } from './auth.service'
 import { AuthProvider } from '../config/auth.config'
 import { UserDecorator } from '../common/decorators/user.decorator'
 import { RefreshTokenDto } from './dto/refresh-token.dto'
-import { User } from '../users/user.entity'
+import { Users } from '../users/users.entity'
 
 @Controller('auth')
 export class AuthController {
@@ -49,9 +49,9 @@ export class AuthController {
   @Redirect()
   @UseGuards(AuthGuard(AuthProvider.GOOGLE))
   @Get(AuthProvider.GOOGLE + '/callback')
-  async loginGoogleCallback(@UserDecorator() user: User) {
+  async loginGoogleCallback(@UserDecorator() user: Users) {
     if (!user) {
-      throw new InternalServerErrorException('User not found.')
+      throw new InternalServerErrorException('Users not found.')
     }
     const { accessToken, refreshToken } = await this.authService.createAuthTokens(user.id)
 
@@ -68,9 +68,9 @@ export class AuthController {
 
   @Post(AuthProvider.GOOGLETOKEN)
   @UseGuards(AuthGuard(AuthProvider.GOOGLETOKEN))
-  async loginGoogleToken(@UserDecorator() user: User) {
+  async loginGoogleToken(@UserDecorator() user: Users) {
     if (!user) {
-      throw new InternalServerErrorException('User not found.')
+      throw new InternalServerErrorException('Users not found.')
     }
     return await this.authService.createAuthTokens(user.id)
   }

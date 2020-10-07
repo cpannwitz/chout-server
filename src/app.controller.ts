@@ -12,4 +12,9 @@ export class AppController {
     const clientURI = this.config.get('system.clientURI')
     res.redirect(clientURI)
   }
+
+  @Get('/meow')
+  meow() {
+    return { hello: 'What' }
+  }
 }

@@ -1,9 +1,10 @@
 # Chout-Server
 This server boilerplate is built with [NestJS](https://nestjs.com/) and the [Express](https://expressjs.com/de/) adapter.
 Also it includes compatible submodules to work with:
-- TypeORM -> **Postgres**
+- Prisma -> **Postgres DB**
 - Apollo-Express-Server -> **GraphQL**
 - Swagger -> **REST Documentation**
+- Firebase -> **Authentication and services**
 - Redis (currently unused)
 
 ## Tooling
@@ -29,10 +30,8 @@ Additionally, Gitlab CI is used to deploy the built image.
 > For successful deploy you need to provide your HEROKU_API_KEY to gitlab CI env variables!
 
 ## Authentication
-There are two ways of authentication available, which are both resulting in exchanging social auth provider access token for a JWT Token, which is used primarily for authentication:
-
-- **OAuth Implicit Flow** for Google Login (REST & GraphQL)
-- **OAuth Authorization Code Flow** for Google Login (only REST)
+Authentication is done by Firebase SDK, which is used to validate user ID tokens, sent from the clients.
+After successful authentication and authorization, the user data will be persisted to our own database.
 
 ## Authorization
 Based on roles saved on the user record, there are two ways of authorization used:
@@ -60,5 +59,3 @@ Sentry is found here: [sentry.io](https://sentry.io/)
 
 ## Additional Modules
 - Health checks via Terminus
-- User module for authentication
-- Basic Event module for data entities
