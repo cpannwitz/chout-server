@@ -1,6 +1,6 @@
 {
   "name": "@chout/server",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "NodeJS server powered by NestJS for Chout",
   "author": {
     "email": "ch.von.pa@gmail.com",
