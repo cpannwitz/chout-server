@@ -2,3 +2,8 @@
 
 20201007095950-initial-user
 20201007120326-extended-user
+20201008142202-add-authprovider-enum
+20201008142407-authprovider-non-array
+20201008142929-add-authprovider-enum
+20201009075729-authentication-refinements
+20201009075756-default-profile-image

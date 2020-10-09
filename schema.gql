@@ -2,8 +2,20 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""AuthProvider name"""
+enum AuthProvider {
+  FACEBOOK
+  GITHUB
+  GOOGLE
+  TWITTER
+}
+
 """Date custom scalar type"""
 scalar Date
+
+type Mutation {
+  validateUser: User
+}
 
 type Query {
   hello(name: String!): String!
@@ -26,7 +38,7 @@ type User {
   image: String
   lastSignInTime: Date!
   phoneNumber: String
-  provider: String
+  provider: AuthProvider
   role: Role!
   updatedAt: Date!
   username: String!

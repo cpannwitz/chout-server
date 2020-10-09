@@ -1,13 +1,11 @@
 import { Field, ObjectType, registerEnumType } from '@nestjs/graphql'
 import { BasicEntity } from '../common/models/basic.entity'
-import { Role } from '@prisma/client'
+import { Role, AuthProvider } from '@prisma/client'
 
-// // export enum Role {
-// //   USER = 'USER',
-// //   ORGANISATION = 'ORGANISATION',
-// //   MODERATOR = 'MODERATOR',
-// //   ADMIN = 'ADMIN'
-// }
+registerEnumType(AuthProvider, {
+  name: 'AuthProvider',
+  description: 'AuthProvider name'
+})
 
 registerEnumType(Role, {
   name: 'Role',
@@ -19,8 +17,8 @@ export class User extends BasicEntity {
   verified: boolean
   @Field(() => Date)
   lastSignInTime: Date | null
-  @Field(() => String, { nullable: true })
-  provider: string | null
+  @Field(() => AuthProvider, { nullable: true })
+  provider: AuthProvider | null
   @Field(() => Role)
   role: Role
   email: string

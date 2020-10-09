@@ -18,12 +18,35 @@ export class UserService {
     return this.orm.user.findOne({ where: { id } })
   }
 
+  findOneByEmail(email: string) {
+    return this.orm.user.findOne({ where: { email } })
+  }
+
   findMany(args: FindManyUserArgs) {
     return this.orm.user.findMany(args)
   }
 
   create(data: CreateUserDto) {
     return this.orm.user.create({ data })
+  }
+
+  upsert(data: CreateUserDto) {
+    const { email, username, image, phoneNumber, provider, verified } = data
+    return this.orm.user.upsert({
+      where: { email: data.email },
+      create: {
+        email,
+        username,
+        image,
+        provider,
+        phoneNumber,
+        verified
+      },
+      update: {
+        phoneNumber,
+        verified
+      }
+    })
   }
 
   update(id: string, data: UpdateUserDto) {

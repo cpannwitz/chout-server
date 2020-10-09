@@ -17,6 +17,8 @@ import { UserModule } from './user/user.module'
 import { OrmModule } from './orm/orm.module'
 
 import { DateScalar } from './common/scalars/date.scalar'
+import { AuthModule } from './auth/auth.module'
+import { FirebaseModule } from './firebase/firebase.module'
 
 @Module({
   imports: [
@@ -44,7 +46,9 @@ import { DateScalar } from './common/scalars/date.scalar'
     //   inject: [ConfigService],
     //   useFactory: (config: ConfigService) => config.get('redis') || {}
     // }),
-    UserModule
+    UserModule,
+    AuthModule,
+    FirebaseModule
   ],
   controllers: [AppController, HealthController],
   providers: [

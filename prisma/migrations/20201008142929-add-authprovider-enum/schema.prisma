@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 generator client {
@@ -39,6 +39,6 @@ model User {
   role              Role          @default(USER)
   email             String        @unique
   username          String        @unique
-  image             String?       @default("https://picsum.photos/200")
+  image             String?
   phoneNumber       String?
 }
