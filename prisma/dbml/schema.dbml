@@ -8,11 +8,11 @@ Table User {
   updatedAt DateTime [not null]
   verified Boolean [not null, default: false]
   lastSignInTime DateTime [default: `now()`, not null]
-  provider String
+  provider AuthProvider
   role Role [not null, default: 'USER']
   email String [unique, not null]
   username String [unique, not null]
-  image String
+  image String [default: 'https://picsum.photos/200']
   phoneNumber String
 }
 
@@ -21,4 +21,11 @@ Enum Role {
   ORGANISATION
   MODERATOR
   ADMIN
+}
+
+Enum AuthProvider {
+  GOOGLE
+  FACEBOOK
+  TWITTER
+  GITHUB
 }

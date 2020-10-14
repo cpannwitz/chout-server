@@ -1,10 +1,8 @@
 import { GqlModuleOptions } from '@nestjs/graphql'
 import { registerAs } from '@nestjs/config'
-import { applyMiddleware } from 'graphql-middleware'
 import corsConfig from './cors.config'
-import graphqlAccessControlConfig from './graphqlAccessControl.config'
-
-// GraphQL Manager: https://studio.apollographql.com/org/chout
+// import { applyMiddleware } from 'graphql-middleware'
+// import graphqlAccessControlConfig from './graphqlAccessControl.config'
 
 export default registerAs(
   'graphql',
@@ -33,7 +31,7 @@ export default registerAs(
       sortSchema: true,
       buildSchemaOptions: {
         dateScalarMode: 'isoDate'
-      },
-      transformSchema: schema => applyMiddleware(schema, graphqlAccessControlConfig())
+      }
+      // transformSchema: schema => applyMiddleware(schema, graphqlAccessControlConfig())
     } as GqlModuleOptions)
 )
