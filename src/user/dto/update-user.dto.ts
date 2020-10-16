@@ -6,15 +6,24 @@ import { IsBoolean, IsEmail, IsString, IsUrl } from 'class-validator'
 export class UpdateUserDto {
   @IsBoolean()
   verified?: boolean
+
   lastSignInTime?: Date
+
+  @IsString()
+  providerId?: string
+
   provider?: AuthProvider
   role?: Role
+
   @IsEmail()
   email?: string
+
   @IsString()
   username?: string
+
   @IsUrl()
   image?: string
+
   @IsString()
   phoneNumber?: string
 }

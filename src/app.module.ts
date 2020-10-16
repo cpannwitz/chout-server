@@ -5,6 +5,7 @@ import { LoggerModule } from 'nestjs-pino'
 import { GraphQLModule } from '@nestjs/graphql'
 import { TerminusModule } from '@nestjs/terminus'
 import { RavenModule, RavenInterceptor } from 'nest-raven'
+import { AccessControlModule, RolesBuilder } from 'nest-access-control'
 // import { RedisModule } from 'nestjs-redis'
 
 import configs from './config'
@@ -46,6 +47,10 @@ import { FirebaseModule } from './firebase/firebase.module'
     //   inject: [ConfigService],
     //   useFactory: (config: ConfigService) => config.get('redis') || {}
     // }),
+    AccessControlModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => config.get('accessControl') || ({} as RolesBuilder)
+    }),
     UserModule,
     AuthModule,
     FirebaseModule

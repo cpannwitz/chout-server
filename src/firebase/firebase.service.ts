@@ -41,11 +41,21 @@ export class FirebaseService {
   // * Authentication
 
   getUserById(userUid: string) {
+    console.log(`LOG | : FirebaseService -> getUserById -> userUid`, userUid)
     return this.getAuth().getUser(userUid)
   }
 
   convertUser(firebaseUser: auth.UserRecord): CreateUserDto {
-    const { email, emailVerified, displayName, photoURL, phoneNumber, providerData } = firebaseUser
+    const {
+      email,
+      emailVerified,
+      displayName,
+      photoURL,
+      phoneNumber,
+      providerData,
+      uid
+    } = firebaseUser
+    console.log(`LOG | : FirebaseService -> convertUser -> firebaseUser`, firebaseUser)
     if (!email) {
       throw new InternalServerErrorException('No email present on firebase user.')
     }
@@ -55,6 +65,7 @@ export class FirebaseService {
       username: displayName || email,
       image: photoURL,
       provider: getAuthProviderValue(providerData),
+      providerId: uid,
       phoneNumber: phoneNumber
     }
   }

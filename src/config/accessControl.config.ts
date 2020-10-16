@@ -1,44 +1,42 @@
 import { registerAs } from '@nestjs/config'
 import { RolesBuilder } from 'nest-access-control'
-
-// TODO: use schema role
-export enum ACLRoles {
-  user = 'user',
-  organisation = 'organisation',
-  moderator = 'moderator',
-  admin = 'admin'
-}
+import { Role } from '@prisma/client'
 
 export enum ACLResources {
-  user = 'user'
+  USER = 'USER',
+  ORGANISATION = 'ORGANISATION'
 }
-
-// TODO: implement into app.module.ts
-// AccessControlModule.forRootAsync({
-//   inject: [ConfigService],
-//   useFactory: (config: ConfigService) => config.get('accessControl') || ({} as RolesBuilder)
-// }),
 
 export default registerAs('accessControl', () => {
   const roles: RolesBuilder = new RolesBuilder()
 
   roles
     // User
-    .grant(ACLRoles.user)
-    .readOwn(ACLResources.user)
-    .updateOwn(ACLResources.user)
-    .grant(ACLRoles.organisation)
-    .extend(ACLRoles.user)
-    .grant(ACLRoles.moderator)
-    .extend(ACLRoles.user)
-    .readAny(ACLResources.user)
-    .updateAny(ACLResources.user)
-    .grant(ACLRoles.admin)
-    .extend(ACLRoles.moderator)
-    .readAny(ACLResources.user)
-    .createAny(ACLResources.user)
-    .updateAny(ACLResources.user)
-    .deleteAny(ACLResources.user)
+    .grant(Role.USER)
+    .readOwn(ACLResources.USER)
+    .updateOwn(ACLResources.USER)
+    // Organisation
+    .grant(Role.ORGANISATION)
+    .readOwn(ACLResources.ORGANISATION)
+    .updateOwn(ACLResources.ORGANISATION)
+    // Moderator
+    .grant(Role.MODERATOR)
+    .extend(Role.USER)
+    .read(ACLResources.USER)
+    .update(ACLResources.USER)
+    .read(ACLResources.ORGANISATION)
+    .update(ACLResources.ORGANISATION)
+    // Admin
+    .grant(Role.ADMIN)
+    .extend(Role.MODERATOR)
+    .read(ACLResources.USER)
+    .create(ACLResources.USER)
+    .update(ACLResources.USER)
+    .delete(ACLResources.USER)
+    .read(ACLResources.ORGANISATION)
+    .create(ACLResources.ORGANISATION)
+    .update(ACLResources.ORGANISATION)
+    .delete(ACLResources.ORGANISATION)
 
   return roles
 })

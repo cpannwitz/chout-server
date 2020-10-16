@@ -1,22 +1,20 @@
+import { Resolver } from '@nestjs/graphql'
 import { UseGuards } from '@nestjs/common'
-import { Mutation, Resolver } from '@nestjs/graphql'
+import { Mutation } from '@nestjs/graphql'
 import { AuthenticationError } from 'apollo-server-express'
 
 import { GqlAuthGuard } from '../common/guards/gql-auth.guard'
 import { GqlUser } from '../common/decorators/gql-user.decorator'
-
 import { User } from '../user/user.entity'
-import { AuthService } from './auth.service'
 
 @Resolver()
 export class AuthResolver {
-  constructor(private readonly authService: AuthService) {}
-
   @UseGuards(GqlAuthGuard)
   @Mutation(_ => User, { nullable: true })
-  async validateUser(@GqlUser() user: string) {
+  async validateUser(@GqlUser() user: User) {
     try {
-      return await this.authService.validateUser(user)
+      if (!user) throw new AuthenticationError('User does not exist.')
+      return user
     } catch (error) {
       throw new AuthenticationError(error)
     }

@@ -19,6 +19,8 @@ export class User extends BasicEntity {
   lastSignInTime: Date | null
   @Field(() => AuthProvider, { nullable: true })
   provider: AuthProvider | null
+  @Field(() => String, { nullable: true })
+  providerId: string | null
   @Field(() => Role)
   role: Role
   email: string

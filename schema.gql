@@ -39,6 +39,7 @@ type User {
   lastSignInTime: Date!
   phoneNumber: String
   provider: AuthProvider
+  providerId: String
   role: Role!
   updatedAt: Date!
   username: String!
