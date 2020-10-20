@@ -18,9 +18,9 @@ type Mutation {
 }
 
 type Query {
+  getMe: User!
   hello(name: String!): String!
   helloWorld: String!
-  me: User!
 }
 
 """User role"""
@@ -39,6 +39,7 @@ type User {
   lastSignInTime: Date!
   phoneNumber: String
   provider: AuthProvider
+  providerId: String
   role: Role!
   updatedAt: Date!
   username: String!

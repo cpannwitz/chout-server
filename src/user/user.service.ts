@@ -31,7 +31,7 @@ export class UserService {
   }
 
   upsert(data: CreateUserDto) {
-    const { email, username, image, phoneNumber, provider, verified } = data
+    const { email, username, image, phoneNumber, provider, providerId, verified } = data
     return this.orm.user.upsert({
       where: { email: data.email },
       create: {
@@ -39,6 +39,7 @@ export class UserService {
         username,
         image,
         provider,
+        providerId,
         phoneNumber,
         verified
       },

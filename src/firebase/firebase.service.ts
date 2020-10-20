@@ -45,7 +45,15 @@ export class FirebaseService {
   }
 
   convertUser(firebaseUser: auth.UserRecord): CreateUserDto {
-    const { email, emailVerified, displayName, photoURL, phoneNumber, providerData } = firebaseUser
+    const {
+      email,
+      emailVerified,
+      displayName,
+      photoURL,
+      phoneNumber,
+      providerData,
+      uid
+    } = firebaseUser
     if (!email) {
       throw new InternalServerErrorException('No email present on firebase user.')
     }
@@ -55,6 +63,7 @@ export class FirebaseService {
       username: displayName || email,
       image: photoURL,
       provider: getAuthProviderValue(providerData),
+      providerId: uid,
       phoneNumber: phoneNumber
     }
   }

@@ -3,14 +3,6 @@
   "sourceRoot": "src",
   "compilerOptions": {
     "assets": ["**/*.graphql"],
-    "plugins": [
-      "@nestjs/swagger/plugin",
-      {
-        "name": "@nestjs/graphql/plugin",
-        "options": {
-          "typeFileNameSuffix": [".input.ts", ".args.ts", ".entity.ts", ".model.ts", ".resolver.ts"]
-        }
-      }
-    ]
+    "plugins": ["@nestjs/swagger/plugin", "@nestjs/graphql/plugin"]
   }
 }

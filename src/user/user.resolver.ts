@@ -1,50 +1,27 @@
-// import { PrismaService } from './../../services/prisma.service';
-// import { GqlAuthGuard } from '../../guards/gql-auth.guard';
-import {
-  Resolver,
-  Query
-  // Parent, Mutation, Args, ResolveField
-} from '@nestjs/graphql'
-// import { BadRequestException, UseGuards } from '@nestjs/common'
+import { Resolver, Query } from '@nestjs/graphql'
 import { User } from './user.entity'
 import { UserService } from './user.service'
 import { GqlUser } from '../common/decorators/gql-user.decorator'
-// import { GetUserInput } from './dto/get-user.input'
-// import {
-//   UserInputError,
-//   AuthenticationError,
-//   ForbiddenError,
-//   ValidationError,
-//   SchemaError,
-//   SyntaxError
-// } from 'apollo-server-express'
+import { UseRoles } from 'nest-access-control'
+import { ACLResources } from '../config/accessControl.config'
+import { UseGuards } from '@nestjs/common'
+import { GqlAuthGuard } from '../common/guards/gql-auth.guard'
+import { GqlACGuard } from '../common/guards/gql-ac.guard'
 
-// import { User as UserModel } from '@prisma/client'
-// import { User } from '../users/users.entity'
-// import { UserEntity } from '../../decorators/user.decorator';
-// import { User } from '../../models/user.model';
-// import { ChangePasswordInput } from './dto/change-password.input';
-// import { UserService } from 'src/services/user.service';
-// import { UpdateUserInput } from './dto/update-user.input';
-
-// @UseGuards(GqlAuthGuard)
 @Resolver(() => User)
 export class UserResolver {
   constructor(private userService: UserService) {}
 
+  @UseGuards(GqlAuthGuard, GqlACGuard)
+  @UseRoles({
+    resource: ACLResources.USER,
+    action: 'read',
+    possession: 'own'
+  })
   @Query(_returns => User)
-  async me(@GqlUser() user: User): Promise<User> {
+  async getMe(@GqlUser() user: User): Promise<User> {
     return user
   }
-
-  // @Query(_returns => User, { nullable: true })
-  // async user(@Args('data') data: GetUserInput): Promise<User | null> {
-  //   const user = await this.userService.findOneById(data.id)
-  //   if (!user) {
-  //     throw new UserInputError('User not found.')
-  //   }
-  //   return user
-  // }
 
   // @UseGuards(GqlAuthGuard)
   // @Mutation(_returns => User)

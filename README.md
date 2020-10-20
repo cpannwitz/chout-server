@@ -36,8 +36,7 @@ After successful authentication and authorization, the user data will be persist
 ## Authorization
 Based on roles saved on the user record, there are two ways of authorization used:
 
-- **Nest-Access-Control** (REST)
-- **GraphQL-Shield** (GraphQL)
+- **Nest-Access-Control** (REST & GraphQL)
 
 ## Configuration
 Configuration files for all kinds of services and modules are found in `src/config`, which are loaded by @nestjs/config.
