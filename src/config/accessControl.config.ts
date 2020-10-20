@@ -17,6 +17,7 @@ export default registerAs('accessControl', () => {
     .updateOwn(ACLResources.USER)
     // Organisation
     .grant(Role.ORGANISATION)
+    .extend(Role.USER)
     .readOwn(ACLResources.ORGANISATION)
     .updateOwn(ACLResources.ORGANISATION)
     // Moderator

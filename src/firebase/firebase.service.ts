@@ -41,7 +41,6 @@ export class FirebaseService {
   // * Authentication
 
   getUserById(userUid: string) {
-    console.log(`LOG | : FirebaseService -> getUserById -> userUid`, userUid)
     return this.getAuth().getUser(userUid)
   }
 
@@ -55,7 +54,6 @@ export class FirebaseService {
       providerData,
       uid
     } = firebaseUser
-    console.log(`LOG | : FirebaseService -> convertUser -> firebaseUser`, firebaseUser)
     if (!email) {
       throw new InternalServerErrorException('No email present on firebase user.')
     }

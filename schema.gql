@@ -18,9 +18,9 @@ type Mutation {
 }
 
 type Query {
+  getMe: User!
   hello(name: String!): String!
   helloWorld: String!
-  me: User!
 }
 
 """User role"""

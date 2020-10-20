@@ -1,8 +1,6 @@
 import { GqlModuleOptions } from '@nestjs/graphql'
 import { registerAs } from '@nestjs/config'
 import corsConfig from './cors.config'
-// import { applyMiddleware } from 'graphql-middleware'
-// import graphqlAccessControlConfig from './graphqlAccessControl.config'
 
 export default registerAs(
   'graphql',
@@ -32,6 +30,5 @@ export default registerAs(
       buildSchemaOptions: {
         dateScalarMode: 'isoDate'
       }
-      // transformSchema: schema => applyMiddleware(schema, graphqlAccessControlConfig())
     } as GqlModuleOptions)
 )

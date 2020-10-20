@@ -6,6 +6,7 @@ import { AuthenticationError } from 'apollo-server-express'
 import { GqlAuthGuard } from '../common/guards/gql-auth.guard'
 import { GqlUser } from '../common/decorators/gql-user.decorator'
 import { User } from '../user/user.entity'
+// import { User } from '@prisma/client'
 
 @Resolver()
 export class AuthResolver {
